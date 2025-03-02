@@ -1,0 +1,337 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en]C-CCK-MCD NetscapeOnline.co.uk  (Win98; U) [Netscape]">
+   <title>Leningrad-1 - Alex J. Lowry's Electronics Homepage</title>
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="stone1.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%"><img SRC="lgrdlogo.gif" ALT="Leningrad-1 logo" NOSAVE height=101 width=640>
+<h2>
+<i><font face="Arial,Helvetica">Leningrad-1</font></i></h2>
+Language:&nbsp;<img SRC="icons/flag-us.gif" ALT="US" NOSAVE height=18 width=30 align=ABSCENTER><img SRC="icons/flag-gb.gif" ALT="GB" NOSAVE height=18 width=30 align=ABSCENTER>
+English |&nbsp;<a href="lngrd-ru.html"><img SRC="icons/flag-ru.gif" ALT="RU" NOSAVE height=18 width=30 align=ABSCENTER></a><a href="lngrd-ru.html">
+Русский</a>
+<p><b>More photos can be viewed on <a href="imgs-lgd.html">this page.</a></b>
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/lgrd2_fs.jpg"><img SRC="photos/lgrd2_th.jpg" ALT="Leningrad-1" NOSAVE height=201 width=320 align=RIGHT></a>When
+Sinclair released the original ZX Spectrum in 1982, it was designed with
+a chip called the ULA, short for 'uncommitted logic array'. This chip combined
+a large amount of logic functions into a single custom-made package, significantly
+lowering the component count and cost.
+<p>In modern times, when it costs about as much to buy an old Spectrum
+as it does to build your own, building a Spectrum based on the original
+circuit is severely hindered by the fact that these chips were only made
+for the Spectrum and different versions were used on each PCB revision,
+making them extremely rare today.
+<p>The ULA also generates a lot of heat, so due to being installed without
+a heatsink and placed into a case with no ventilation <i>(as was done in
+the original Spectrum),</i> overheating is a common failure point. As a
+result, most new old stock ULAs have already been used to repair existing
+machines.
+<p>Therefore, it has become something of an art form in electronics to
+design a Spectrum clone that only uses parts that are still readily available.
+The most well known example of this is probably the <a href="https://github.com/DonSuperfo/Superfo-Harlequin-128">Superfo
+Harlequin 128</a>, a 100% compatible Spectrum 128K clone built entirely
+with off-the-shelf parts. The only downside of this design is its high
+chip count. <b>(61 ICs)</b>
+<p>The art of cloning the ZX Spectrum is not a modern concept, however
+- in fact, it's almost as old as the Spectrum itself! Countries where original
+Sinclair hardware was difficult to obtain <i>(due to economic tariffs,
+sanctions, etc.)</i> often had very lenient copyright laws, allowing the
+existence of domestic industries dedicated to replicating the Spectrum's
+hardware with the parts available to them. This resulted in computers with
+a large software base immediately upon release, since only one copy of
+a program needed to be smuggled into the country for it to be copied and
+distributed en masse.
+<p>The most notable example of this is probably the Soviet Union and surrounding
+Eastern Bloc. Development of clones in this part of the world began around
+1985, with early models consisting of around <b>50-60 ICs</b>. However,
+the complexity of these early homemade clones made them expensive and difficult
+to build and troubleshoot, so they weren't very popular.
+<p>In 1988, an electronics engineer from the city of Leningrad named Sergey
+Zonov developed a Spectrum clone using only <b><i>41 ICs,</i></b> resulting
+in a clone that was decently affordable, even on the humble average salary
+of the USSR. This was an immediate success, and computers based on the
+<i>"Leningrad
+variant"</i> (later renamed Leningrad-1 to differentiate from the subsequent
+Leningrad-2) were mass produced for almost a decade, becoming the most
+popular ZX Spectrum variant in the former USSR.
+<p>The USSR used its own naming scheme for ICs, but all the Soviet ICs
+this computer was designed for have exact Western equivalents. As far as
+I know, this is still the simplest ZX Spectrum clone to date that doesn't
+use a programmable logic array in place of off-the-shelf logic.
+<h4>
+<i><font face="Arial,Helvetica">Technical Description</font></i></h4>
+<a href="photos/lgd10_fs.jpg"><img SRC="photos/lgd10_th.jpg" ALT="Leningrad-1 system PCB" NOSAVE height=196 width=320 align=RIGHT></a>The
+relative simplicity of the Leningrad-1's design comes at the cost of 100%
+compatibility. The majority of software works just fine, but certain programming
+tricks that rely on specific hardware timing may not look or sound like
+they're supposed to.
+<p>Having tested my Leningrad-1 with a decent amount of programs, I'd say
+90-95% work with no problems whatsoever, while 97-98% are usable/playable
+<i>(e.g.,
+no game-breaking glitches).</i>
+<p>The composite video output is monochrome, with color video available
+from a SCART connector <i>(currently not working as of Revision 0)</i>
+and a DIN-8 connector intended for connection to a custom external video
+adapter <i>(e.g., VGA).</i>
+<p>The commands that are used to play Yamaha AY audio on more advanced
+Spectrum models appear to conflict with the border drawing circuitry. This
+results in the border flickering when programs attempt to play AY music.
+<p>I have made an effort to make this computer as easy to build as possible.
+The value of almost every component <i>(excluding pin headers and two connectors)</i>
+is printed on the silkscreen, so it's possible to assemble the whole thing
+without having to check the bill of materials.
+<p>To aid in ease of construction <i>(and cost reduction)</i>, the top
+and bottom of the static-sensitive system PCB can be protected without
+having to fabricate a case. The keyboard PCB is designed to mount on top
+of the system PCB with standard nylon M3 screws and standoffs. Since most
+PCB fabricators require that you order a minimum of 5 boards per design,
+you can use one of the spare keyboard PCBs to cover the bottom side of
+the system PCB.
+<p>The keyboard and system PCBs are mounted together with 6 standoffs.
+The keyboard has an extra 4 holes for standoffs that go through the keyboard
+and sit on top of the system PCB. These are intended to add structural
+stability - perfect for fast-paced action games!
+<h4>
+<i><font face="Arial,Helvetica">Making the Keyboard</font></i></h4>
+<a href="photos/lgrd4_fs.jpg"><img SRC="photos/lgrd4_th.jpg" ALT="Keyboard labels" NOSAVE height=213 width=320 align=RIGHT></a>The
+ZX Spectrum was designed long before keyboard layouts had been standardized.
+In addition, each key corresponds to several BASIC commands, which are
+printed on the keys. Unfortunately, nobody makes Cherry MX compatible keycaps
+with ZX Spectrum commands printed on them, so you have to make your own.
+<p>I've found that the best way to do this is to order keycaps with removable
+transparent covers (the same type often seen on point-of-sale terminals)
+and print out labels to cut out and insert in the keycaps. Such keycaps
+can be ordered cheaply from eBay or AliExpress under the search term "transparent
+cover key caps".
+<p>The end result is professional-looking <i>(depending on how good your
+cutting skills are)</i>, durable keycaps that won't wear out over time.
+<p>A pre-made image of key labels can be downloaded further down the page.
+I designed it based on a combination of <a href="photos/lgrd6_fs.jpg">the
+original Spectrum keyboard</a> and the labels from <a href="photos/lgrd5_fs.jpg">this
+Soviet DIY computer kit</a> <i>(which was based on the Leningrad-1).</i>
+<p>In total, the keyboard PCB has 40 single width keys in the original
+ZX Spectrum layout, and one 6.25x width spacebar. To build the keyboard,
+you'll need:
+<ul>
+<li>
+5-pin MX-compatible keyswitches <b>(x41)</b> - <i>3-pin switches will work
+as well, but they're trickier to mount evenly on the PCB.</i></li>
+
+<li>
+1x width transparent cover key caps <b>(x40)</b></li>
+
+<li>
+6.25x width spacebar <b>(x1)</b></li>
+
+<li>
+6.25x width MX-compatible spacebar stabilizer <b>(x1)</b> - <i>There appear
+to be two versions of this, a panel mounted version and a PCB mounted version.
+Only the PCB mounted version will fit on the PCB.</i></li>
+</ul>
+Technically the spacebar is optional, since the keyboard retains the corner
+space key as seen on the original Spectrum.
+<p>I'm working on a half-size keyboard that uses small tactile switches
+as a cheaper alternative, but the mechanical keyboard offers a much nicer
+typing experience.
+<h4>
+<i><font face="Arial,Helvetica">Burning the ROM</font></i></h4>
+<a href="photos/eprm1_fs.jpg"><img SRC="photos/eprm1_th.jpg" ALT="27128 EPROM" NOSAVE height=198 width=320 align=RIGHT></a>If
+you don't already have an (E)EPROM programmer, getting Sinclair BASIC onto
+a ROM may be difficult.
+<p>By default, the Leningrad-1 uses the original Sinclair ROM data burnt
+onto a 27128 EPROM. It's possible to use some other models of (E)EPROM,
+usually if the binary is written to the upper 16 KB of the chip.
+<p>Some eBay sellers here in the UK sell pre-programmed EPROMs with newer,
+open source versions of BASIC on them. These usually come with extra components
+for modifying an original Spectrum to work with EPROMs, but these aren't
+needed for Spectrum clones.
+<p><a href="eprom.html">I have written an in-depth guide on how to get
+started programming ROMs on this page,</a> with recommendations for what
+kind of programmer to buy and a list of other chips that can be used in
+place of the 27128.
+<p>The (E)EPROM programming guide also has a collection of alternative
+BASIC ROMs available for download.
+<h4>
+<i><font face="Arial,Helvetica">Schematic</font></i></h4>
+One thing that drew me towards recreating the Leningrad-1 in particular
+is how the schematic is relatively easy to understand, despite its complexity.
+Before ordering parts to build the Revision 0 PCB, I annotated the schematic
+to the best of my ability to make sure I had everything in the right place.
+This (mostly) annotated schematic should help explain how the Leningrad-1
+works at the lowest level.
+<p>The schematic can be downloaded in PDF form in the Downloads section
+of this page.
+<h4>
+<i><font face="Arial,Helvetica">Getting Software</font></i></h4>
+<a href="photos/lgrd7_fs.jpg"><img SRC="photos/lgrd7_th.jpg" ALT="Original repair guide" NOSAVE height=320 width=243 align=RIGHT></a>The
+Leningrad-1's tape interface is compatible with original ZX Spectrum tapes,
+with the exception that I haven't been able to get fast loading tapes to
+work. This usually isn't a problem, since many programs were re-released
+multiple times, and there's normally at least one version without fast
+loading.
+<p>Most Spectrum programs are distributed online as TAP or TZX files -
+these are binary versions of the stream of data from the tape. These files
+are designed for use primarily with emulators, and loading them onto real
+hardware can be difficult.
+<p>There's a variety of programs available that can convert these files
+into more versatile standard audio formats. My favorite one is k7zx for
+Windows, which you can download further down the page. It's a program from
+2008, so it should run on Windows versions going back to XP <i>(maybe 2000)</i>,
+and it runs well on my Windows 10 machine. It might also work on Windows
+11. <i>(although if you're willingly using Windows 11, I suggest you consult
+a psychiatrist)</i>
+<h4>
+<i><font face="Arial,Helvetica">Revision 0 PCB/Hardware Issues</font></i></h4>
+<i>The first PCB is working for the most part, but there is room for improvement.
+Below are my notes from assembling and testing it. I'm currently working
+on a Revision 1 PCB which will implement fixes for all these issues.</i>
+<p>Due to Soviet-era supply shortages, original Leningrad-1 boards were
+assembled with a variety of different logic types <i>(7400, 74LS00, 74HCT00,
+etc.)</i> with different switching speeds. Therefore, many fixes were proposed
+for adjusting signal timing, mostly based on adding capacitors between
+signal lines and GND. Since Revision 0 was intended partially as a testing
+prototype, I added as many of these additional components to the PCB as
+I could. Now I know what works best with 100% 74LS logic <i>(which is much
+easier to find now than it was in the USSR!)</i> I'll remove the unnecessary
+components in the next revision, simplifying the PCB and assembly process.
+<p>The video signal isn't perfectly compliant to standard PAL/SECAM video
+timings. Because of this, many TVs and monitors won't be able to display
+a proper video signal and some displays simply refuse to display anything
+at all. There are some known modifications for improving video signal compatibility
+that I'll implement on the next revision.
+<p>The tape loading circuit uses a Motorola MC1456 op-amp <i>(the closest
+equivalent to the Soviet-made КР140УД6).</i> This part has been out
+of production for decades, and usually sells for a staggering $10.00. There's
+probably an equivalent op-amp that's still manufactured, but the whole
+tape loading circuit can be simplified significantly; the Leningrad-1 tape
+loading circuit uses 2 ICs and 11 discrete components, but the tape loading
+circuit on the Leningrad-2 achieves the same functionality with only 1
+IC and 4 discretes.
+<p>I haven't been able to get the Kempston joystick interface to work.
+In some games the character moves in the wrong directions, while in some
+games the joystick does nothing at all. Some sources say that the Leningrad's
+joystick interface is inherently flawed, and suggest ways of improving
+it. However, the best solution may be to ditch the Kempston interface altogether
+and implement a Sinclair interface instead. The Sinclair interface is mapped
+directly to the keyboard, so there's not much to go wrong since the keyboard
+works fine.
+<p>The SCART connector is too far to the right side of the PCB. It turns
+out some SCART connectors have brackets on the sides, which overlap with
+one of the standoffs used to mount the keyboard onto the system board.
+<p>The guide I found for connecting the Leningrad-1 to a SCART cable said
+to leave pins 17 and 21 disconnected. This seems to have been a mistake,
+as pin 17 is used as a ground for the sync signal <i>(pin 20)</i>.
+<p>The audio output is too loud, which usually results in an extremely
+coarse volume control on whatever it's plugged into. This could be fixed
+by adding a resistor in series with the audio output.
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+<a href="photos/lgrd1_fs.jpg"><img SRC="photos/lgrd1_th.jpg" ALT="Leningrad-1 system PCB" NOSAVE height=154 width=320 align=RIGHT></a>If
+you want to build your own Leningrad-1, you'll need some files for making
+the PCB and keyboard labels.
+<p><a href="download/leningrd/leningrad-1-r0-bom.xls"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-r0-bom.xls">
+Bill of Materials</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>XLS spreadsheet, 29.0 KB</i> - A list of all
+the components you'll need to build the computer. I recommend installing
+the parts highlighted in green, and <b>not</b> installing the parts highlighted
+in purple and blue.
+<p><a href="download/leningrd/leningrad-1-r0-bom.pdf"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-r0-bom.pdf">
+Bill of Materials</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 115 KB</i> - A list of all the
+components you'll need to build the computer. I recommend installing the
+parts highlighted in green, and <b>not</b> installing the parts highlighted
+in purple and blue.
+<p><a href="download/leningrd/leningrad-1-kbd-r0-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-kbd-r0-sch.pdf">
+Keyboard Schematic</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 16.3 MB</i> - My schematic for
+the keyboard.
+<p><a href="download/leningrd/leningrad-1-r0-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-r0-sch.pdf">
+System Schematic</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 3.07 MB</i> - My mostly annotated
+schematic for the Leningrad-1.
+<p><a href="download/leningrd/leningrad-1-kbd-r0-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-kbd-r0-gerbers.zip">
+Keyboard PCB Gerbers</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 326 KB</i> - PCB for a Cherry MX
+compatible keyboard with spacebar.
+<p><a href="download/leningrd/leningrad-1-r0-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-r0-gerbers.zip">
+System PCB Gerbers</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.32 MB</i> - The PCB for the computer
+itself.
+<p><a href="download/leningrd/keyboard.png"><img SRC="icons/img.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/keyboard.png">
+Keyboard Label Sheet</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PNG image, 718 KB</i> - Keyboard labels for printing.
+Measure how much space is under the keycaps before printing - there's a
+DPI guide on the image to aid in getting the labels to be the right size.
+Make sure to cut out the labels around the <i>inside</i> of the black outlines.
+<p><a href="download/leningrd/rom/sinclair-1982.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/sinclair-1982.bin">
+Sinclair BASIC ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Original 1982 Sinclair
+48K BASIC.
+<h4>
+<i><font face="Arial,Helvetica">Extra Downloads</font></i></h4>
+<a href="photos/lgrd9_fs.jpg"><img SRC="photos/lgrd9_th.jpg" ALT="Boot screen close up" NOSAVE height=187 width=320 align=RIGHT></a>These
+extra downloads are mainly for those who want to modify the files seen
+above.
+<p><a href="download/leningrd/wav-pack.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/wav-pack.zip">
+ZX Spectrum Software - WAV Audio Starter Pack</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 36.8 MB</i> - A collection of Spectrum
+software pre-converted to WAV audio. Please note that the total uncompressed
+size of this archive is <b>595 MB!</b>
+<p><a href="download/leningrd/leningrad-1-kbd-r0-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-kbd-r0-kicad.zip">
+Keyboard PCB KiCad Files</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 2.90 MB</i> - Useful if you want
+to make modifications to the keyboard PCB. Made with KiCad 8.
+<p><a href="download/leningrd/leningrad-1-r0-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-r0-kicad.zip">
+System PCB KiCad Files</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 3.56 MB</i> - Useful if you want
+to make modifications to the system PCB. Made with KiCad 8.
+<p><a href="download/leningrd/keyboard.xcf"><img SRC="icons/img.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/keyboard.xcf">
+Keyboard Label Sheet</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i><a href="https://www.gimp.org">GIMP</a> XCF image,
+5.24 MB</i> - Useful if you want to design your own keyboard labels.
+<p><a href="download/leningrd/leningrad-1-logo-otk.png"><img SRC="icons/img.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-logo-otk.png">
+Leningrad-1 Logo (19890 x 3148 px, Transparent) (With USSR Quality Mark)</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PNG image, 752 KB</i> - The logo seen at the
+top of the page in full resolution.
+<p><a href="download/leningrd/leningrad-1-logo.png"><img SRC="icons/img.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/leningrad-1-logo.png">
+Leningrad-1 Logo (19890 x 3148 px, Transparent) (Without USSR Quality Mark)</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PNG image, 602 KB</i> - The logo seen at the
+top of the page in full resolution.
+<p><a href="download/leningrd/fonts.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/fonts.zip">
+Custom Fonts</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 338 KB</i> - Custom fonts used for
+the KiCad files and XCF label sheet. Only needed if you want to modify
+these files.
+<p><a href="download/leningrd/other-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/other-sch.zip">
+Other Schematics</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 8.87 MB</i> - Leningrad-1 schematics
+from other sources. Note that these will contain differences to my version
+of the schematic and PCB.
+<p><a href="download/leningrd/k7zx_win_bin_4.3.zip"><img SRC="icons/win.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/k7zx_win_bin_4.3.zip">
+k7zx 4.3</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.00 MB</i> - A handy Windows utility
+for converting TAP/TZX Spectrum emulator files into playable WAV/MP3 audio.
+It can also be downloaded <a href="https://worldofspectrum.net/utilities/#tzxtools">here.</a>
+<p>
+<hr WIDTH="100%">Thanks to:
+<br>&nbsp;&nbsp;&nbsp; Sergey Zonov for designing the Leningrad-1.
+<br>&nbsp;&nbsp;&nbsp; Z.A.N. (<a href="https://sblive.narod.ru">sblive.narod.ru</a>)
+for useful technical details and schematics.
+<br>&nbsp;&nbsp;&nbsp; Sergey Bagan (<a href="https://zxbyte.ru">zxbyte.ru</a>)
+for many of the circuit improvements added, and most of the ROM files.
+<br>&nbsp;&nbsp;&nbsp; Mick (<a href="http://micklab.ru">micklab.ru</a>)
+for useful technical details and schematics.
+<br>&nbsp;&nbsp;&nbsp; Konstantin Aigi (<a href="https://www.cxemateka.ru">cxemateka.ru</a>)
+for circuit improvements and a step-by-step guide to checking for issues
+as you build the computer.
+<br>&nbsp;&nbsp;&nbsp; Sergei Frolov (<a href="http://www.leningrad.su">leningrad.su</a>)
+for images of Soviet ZX Spectrum clones (and an excellent museum of Soviet
+electronics).
+<p>Last updated on Mar 2, 2025.
+</body>
+</html>

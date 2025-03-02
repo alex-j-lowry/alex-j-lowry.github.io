@@ -1,0 +1,256 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en]C-CCK-MCD NetscapeOnline.co.uk  (Win98; U) [Netscape]">
+   <title>EPROM/EEPROM Programming - Alex J. Lowry's Electronics Homepage</title>
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="shapes.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%">
+<h2>
+<i><font face="Arial,Helvetica">EPROM/EEPROM Programming Guide</font></i></h2>
+Language:&nbsp;<img SRC="icons/flag-us.gif" ALT="US" NOSAVE height=18 width=30 align=ABSCENTER><img SRC="icons/flag-gb.gif" ALT="GB" NOSAVE height=18 width=30 align=ABSCENTER>
+English |&nbsp;<a href="eprom-ru.html"><img SRC="icons/flag-ru.gif" ALT="RU" NOSAVE height=18 width=30 align=ABSCENTER></a><a href="eprom-ru.html">
+Русский</a>
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/eprm2_fs.jpg"><img SRC="photos/eprm2_th.jpg" ALT="T48 (E)EPROM programmer" NOSAVE height=238 width=320 align=RIGHT></a>If
+you don't already own an (E)EPROM programmer, I highly recommend getting
+one - this probably won't be the only project you need to program a ROM
+for, and the cost of paying someone else to do it <i>(if you can even find
+someone else to do it)</i> adds up fast.
+<p>I recommend getting a T48 programmer from <a href="http://www.xgecu.com">XGecu</a>.
+It's easy to use, connects to your computer through USB and will work with
+most ROMs available. XGecu's Xgpro program for Windows also lets you use
+this programmer to test most of the logic ICs on the Leningrad-1.
+<p>For Linux and Mac users, <a href="https://davidgriffith.gitlab.io/minipro">Minipro</a>
+is in development as an open source cross-platform alternative to XGecu's
+proprietary Windows-only software. As of the time of writing, it's still
+a CLI-only tool with "experimental" T48 support.
+<p>If you'd rather not use the Windows utility due to Microsoft ending
+Windows 10 support, note that it's possible to activate Windows 10 LTSC
+2021 <i>(supported until 2032)</i> with an <a href="https://massgrave.dev">open
+source utility</a>. Windows LTSC is essentially Microsoft's 'good edition'
+of Windows, and comes without all the bloatware bundled into W10/11 Pro.
+<h4>
+<i><font face="Arial,Helvetica">Getting a ROM</font></i></h4>
+Before you buy a ROM, you should make sure it's compatible with your programmer.
+A compatibility list for the T48 is available at the Downloads section
+of this page.
+<h4>
+<i><font face="Arial,Helvetica">Substituting the 27128</font></i></h4>
+The 27128 EPROM hasn't been manufactured in many years. It's still easy
+to find it for sale, but if you can't find one for whatever reason <i>(or
+you already have a spare ROM of a larger capacity),</i> there are a few
+larger capacity ROMs you can use in its place.
+<p>There's one thing to keep in mind, though - When used in a device designed
+for a 27128, the extra higher address pins of larger capacity (E)EPROMs
+will be connected to VCC (logic 1). Therefore, you'll need to write the
+16KB binary data to the upper 16KB of memory.
+<p>This chart shows configurations for writing several types of EEPROM.
+<br>&nbsp;
+<table BORDER COLS=5 WIDTH="640" BGCOLOR="#FFFFFF" >
+<tr>
+<td BGCOLOR="#C0C0C0"></td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>0000-3FFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>4000-7FFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>8000-BFFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>C000-FFFF</i></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27128/27C128</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#009900">Write here</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27256/27C256</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Leave blank</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Write here</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>28C256</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Leave blank</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Write here</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Not present</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27512/W27C512</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Leave blank</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Leave blank</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Leave blank</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Write here</font></b></center>
+</td>
+</tr>
+</table>
+
+<p>Technically it doesn't matter what you write in the "Leave blank" space,
+since it won't be read by the computer.
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+Some of the alternative ROMs may not be 100% compatible with ZX Spectrum
+software.
+<p><a href="download/leningrd/rom/t48-list.txt"><img SRC="icons/txt.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/t48-list.txt">
+XGecu T48 Compatibility List</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>TXT document, 1.27 MB</i> - List of which (E)EPROMs
+are compatible with the T48 programmer.
+<p><img SRC="scrnshot/sinclair-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/sinclair-1982.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/sinclair-1982.bin">
+Sinclair BASIC ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Original 1982 Sinclair
+48K BASIC.
+<p><img SRC="scrnshot/baltic-v1.0-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/baltic-v1.0-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-v1.0.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-v1.0.bin">
+Baltic ROM v1.0</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Belarus.
+Replaces the Sinclair characters with bold, MS-DOS style characters.
+<p><img SRC="scrnshot/baltic-v1.2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-1992.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-1992.bin">
+Baltic ROM v1.2</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Belarus
+in 1992.
+<p><img SRC="scrnshot/baltik-turbo-v1.0.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-turbo-v1.0.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-turbo-v1.0.bin">
+Baltic Turbo ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Belarus.
+<p><img SRC="scrnshot/neti.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/neti-1986.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/neti-1986.bin">
+Novosibirsk NETI AiT ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Novosibirsk,
+Russian SFSR in 1986.
+<p><img SRC="scrnshot/ik30-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/ik30-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/ik-30-1991.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/ik-30-1991.bin">
+Vesta IK-30 ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Russia in
+1991.
+<p><img SRC="scrnshot/bk-001-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/bk-001-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/bk-001-3.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/bk-001-1990.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/bk-001-1990.bin">
+Spektr BK-001 ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in Tver, Russian
+SFSR in 1990. Replaces the Sinclair characters with bold, MS-DOS style
+characters. A Cyrillic character set can be activated by pressing Symbol
+Shift + Space.
+<p><img SRC="scrnshot/gw03.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/gw03.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/gw03.bin">
+Gosh Wonderful ROM v1.32</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed by Geoff Wearmouth
+in 2004. Upgraded version of Sinclair BASIC.
+<p><a href="download/leningrd/rom/new/gw03.html"><img SRC="icons/html.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/gw03.html">
+Instructions</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML page, 25.9 KB</i>
+<p><img SRC="scrnshot/opense-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/opense-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/opense-3.1.2.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/opense-3.1.2.bin">
+OpenSE BASIC ROM v3.1.2</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed in 2012. Upgraded
+version of Sinclair BASIC.
+<p><a href="download/leningrd/rom/new/opense.pdf"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/opense.pdf">
+Instructions</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 652 KB</i>
+<p><img SRC="scrnshot/plus4-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/plus4-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/plus4.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/plus4.bin">
+Unofficial Spectrum +4 BASIC ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed by Andrew Owen
+in 2000. Upgraded version of Sinclair BASIC.
+<p><a href="download/leningrd/rom/new/plus4.txt"><img SRC="icons/txt.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/plus4.txt">
+Instructions</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>TXT document, 652 KB</i>
+<p><img SRC="scrnshot/cxema-diag-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/cxema-diag-4.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/diagnstc/cxema-diag.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/cxema-diag.bin">
+cxemateka.ru Diagnostic ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 2.00 KB</i> - Developed by Konstantin
+Aigi. Tests buffer and RAM. All text is in Russian. Write to beginning
+of the 16KB block applicable to your (E)EPROM. (e.g., beginning at 0000,
+4000 or C000 - see table above)
+<p><img SRC="scrnshot/retro-diag-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/retro-diag-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/diagnstc/retroleum-diag.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/retroleum-diag.bin">
+Retroleum Diagnostic ROM v1.71</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 16.0 KB</i> - Developed by Phil Ruston
+in 2024. Extremely comprehensive, can test pretty much every part of the
+system. Some tests may report errors due to differences in the Leningrad-1's
+hardware compared to the original ZX Spectrum.
+<p><a href="download/leningrd/rom/diagnstc/retroleum-diag.pdf"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/retroleum-diag.pdf">
+Instructions</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 100 KB</i> - Note that some of
+the troubleshooting steps in this document apply only to the original ZX
+Spectrum.
+<p>
+<hr WIDTH="100%">Last updated on Mar 2, 2025.
+<br>This page's background image by <a href="https://github.com/tile-anon/tiles">tile-anon</a>.
+</body>
+</html>

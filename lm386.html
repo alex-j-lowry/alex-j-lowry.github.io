@@ -1,0 +1,233 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en]C-CCK-MCD NetscapeOnline.co.uk  (Win98; U) [Netscape]">
+   <title>LM386 Audio Amplifiers - Alex J. Lowry's Electronics Homepage</title>
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="tile3.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%">
+<h2>
+<i><font face="Arial,Helvetica">LM386 Audio Amplifiers</font></i></h2>
+
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/amps1_fs.jpg"><img SRC="photos/amps1_th.jpg" ALT="Amplifier PCBs" NOSAVE height=206 width=320 align=RIGHT></a>Many
+hardware projects call for a small, self contained audio amplifier, from
+test speakers to adding sound effects to models. While low cost prefabricated
+boards from China are available for this purpose, it's more fun to take
+the DIY aspect of such a project further and build the amplifier yourself.
+<p>The LM386 mono audio amplifier IC is a good choice for this purpose.
+It's available in through-hole and SMD packages, requires a minimum of
+extra circuitry, and has a wide acceptable supply voltage range. I've designed
+two PCBs based on the LM386 schematic on <a href="https://techlib.com/electronics/audioamps.html">TechLib.com</a>:
+a mono amplifier, and a slightly larger stereo amplifier <i>(essentially
+just two mono amps integrated on the same PCB)</i>.
+<p>These boards are best suited for projects that don't require hi-fi sound
+quality, but they produce perfectly adequate sound for the non-audiophile.
+I've used one in a computer speaker I built, and an LM386 was used in the
+AdLib (one of the first sound cards produced for IBM compatible PCs)
+<h4>
+<i><font face="Arial,Helvetica">Technical Description</font></i></h4>
+The LM386 is internally set with a gain of 20 <i>(26 dB)</i>, but this
+can be overridden by external circuitry to increase the gain up to 200
+<i>(46
+dB)</i>. More gain will increase the maximum volume, but will also increase
+the sensitivity of the volume control.
+<p>Since it's difficult to determine the right level of gain for your application
+before assembly, these boards allow for some experimentation. Start off
+with a gain of 20. If that isn't enough, install the components required
+for a gain of 50. To increase the gain further up to 200, connect the "Gain
+Switch" jumper(s).
+<p>To easily switch between 50 and 200, use PCB header pins and jumpers
+for the gain switches.
+<p>Configurations for the mono amplifier:
+<table BORDER COLS=4 WIDTH="500" BGCOLOR="#FFFFFF" >
+<tr>
+<td BGCOLOR="#C0C0C0"></td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 20</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 50</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 200</i></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Install R2?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#3333FF">Doesn't matter</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Install C5?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Connect J5?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+</tr>
+</table>
+
+<p>Configurations for the stereo amplifier:
+<table BORDER COLS=4 WIDTH="500" BGCOLOR="#FFFFFF" >
+<tr>
+<td BGCOLOR="#C0C0C0"></td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 20</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 50</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>Gain = 200</i></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Install R2+R3?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#3333FF">Doesn't matter</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Install C5+C10?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>Connect J4+J6?</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">No</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Yes</font></b></center>
+</td>
+</tr>
+</table>
+
+<p>All connections to the PCB can be made with 2.54mm pin headers and DuPont
+cables, or you can solder cables directly to the PCB for a more permanent
+solution. A PCB footprint for a standard barrel jack power supply is also
+provided for convenience.
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+<a href="download/lm386/lm386-r0-bom.xls"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-r0-bom.xls">
+Bill of Materials</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>XLS spreadsheet, 18.5 KB</i> - Contains a parts
+list for both the mono and stereo amplifiers.
+<p><a href="download/lm386/lm386-r0-bom.pdf"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-r0-bom.pdf">
+Bill of Materials</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 68.2 KB</i> - Contains a parts
+list for both the mono and stereo amplifiers.
+<p><a href="download/lm386/lm386-stereo-r0-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-stereo-r0-sch.pdf">
+Stereo Amplifier Schematic</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 130 KB</i>
+<p><a href="download/lm386/lm386-mono-r0-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-mono-r0-sch.pdf">
+Mono Amplifier Schematic</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 80.9 KB</i>
+<p><a href="download/lm386/lm386-stereo-r0-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-stereo-r0-gerbers.zip">
+Stereo Amplifier PCB Gerbers</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 118 KB</i>
+<p><a href="download/lm386/lm386-mono-r0-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-mono-r0-gerbers.zip">
+Mono Amplifier PCB Gerbers</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 66.9 KB</i>
+<p><a href="download/lm386/lm386-stereo-r0-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-stereo-r0-kicad.zip">
+Stereo Amplifier KiCad Files</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 459 KB</i> - Useful if you want
+to make modifications to the stereo PCB. Made with KiCad 8.
+<p><a href="download/lm386/lm386-mono-r0-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/lm386/lm386-mono-r0-kicad.zip">
+Mono Amplifier KiCad Files</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 387 KB</i> - Useful if you want
+to make modifications to the mono PCB. Made with KiCad 8.
+<p>
+<hr WIDTH="100%">Thanks to Charles Wenzel of <a href="https://techlib.com">TechLib.com</a>
+for designing this circuit.
+<br>Texas Instruments' LM386 datasheet (with handy reference schematics!)
+can be found <a href="https://www.ti.com/lit/ds/symlink/lm386.pdf">here</a>.
+<p>Last updated on Mar 1, 2025.
+<br>This page's background image by <a href="https://github.com/tile-anon/tiles">tile-anon</a>.
+</body>
+</html>

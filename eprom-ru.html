@@ -1,0 +1,300 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en]C-CCK-MCD NetscapeOnline.co.uk  (Win98; U) [Netscape]">
+   <title>EPROM/EEPROM Programming - Alex J. Lowry's Electronics Homepage</title>
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="shapes.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%">
+<h2>
+<i><font face="Arial,Helvetica">EPROM/EEPROM Programming Guide</font></i></h2>
+Язык:&nbsp;<a href="eprom.html"><img SRC="icons/flag-us.gif" ALT="US" NOSAVE height=18 width=30 align=ABSCENTER></a><a href="eprom.html"><img SRC="icons/flag-gb.gif" ALT="GB" NOSAVE height=18 width=30 align=ABSCENTER></a><a href="eprom.html">
+English</a> |&nbsp;<img SRC="icons/flag-ru.gif" ALT="RU" NOSAVE height=18 width=30 align=ABSCENTER>
+Русский
+<p>Эта статья была переведена с помощью
+компьютера. Если вы хотите помочь улучшить
+перевод, пожалуйста, напишите мне.
+<br>Мой адрес электронной почты указан на
+главной странице
+<h4>
+<i><font face="Arial,Helvetica">Вступление</font></i></h4>
+<a href="photos/eprm2_fs.jpg"><img SRC="photos/eprm2_th.jpg" ALT="T48 (E)EPROM programmer" NOSAVE height=238 width=320 align=RIGHT></a>Если
+у вас еще нет программатора для ППЗУ, я
+настоятельно рекомендую приобрести его
+- вероятно, это будет не единственный проект,
+для которого вам нужно запрограммировать
+ППЗУ, а затраты на оплату работы кого-то
+другого (если вы вообще сможете найти кого-то,
+кто это сделает) быстро увеличиваются.
+<p>Я рекомендую приобрести программатор
+T48 от <a href="http://www.xgecu.com">XGecu</a>. Он прост в использовании,
+подключается к вашему компьютеру через
+USB и будет работать с большинством доступных
+ППЗУ. Программа Xgpro от XGecu для Windows также
+позволяет использовать этот программатор
+для тестирования большинства логических
+микросхем на «Ленинграде-1».
+<p>Для пользователей Linux и Mac <a href="https://davidgriffith.gitlab.io/minipro">Minipro</a>
+разрабатывается как кроссплатформенная
+альтернатива фирменному программному
+обеспечению XGecu только для Windows. На момент
+написания статьи это по-прежнему инструмент
+только для CLI с «экспериментальной» поддержкой
+T48.
+<p>Если вы предпочитаете не использовать
+утилиту Windows из-за прекращения поддержки
+Microsoft Windows 10, обратите внимание, что можно
+активировать Windows 10 LTSC 2021 (поддерживается
+до 2032 года) с помощью утилиты с <a href="https://massgrave.dev">открытым
+исходным кодом</a>. Windows LTSC - это «хорошая
+версия» Windows от Microsoft, которая поставляется
+без всех дополнительных бесполезных компонентов,
+входящих в состав W10/11 Pro.
+<h4>
+<i><font face="Arial,Helvetica">Получение ППЗУ</font></i></h4>
+Перед покупкой ППЗУ убедитесь, что оно
+совместимо с вашим программатором. Список
+совместимых устройств для T48 доступен в
+разделе Загрузки на этой странице.
+<h4>
+<i><font face="Arial,Helvetica">Замена 27128</font></i></h4>
+Модуль ППЗУ 27128 не выпускался много лет.
+Его по-прежнему легко найти в продаже, но
+если вы по какой-либо причине не можете
+его найти (или у вас уже есть запасной ППЗУ
+большей емкости), есть несколько ППЗУ большей
+емкости, которые вы можете использовать
+вместо него.
+<p>Однако следует иметь в виду одну вещь
+- при использовании в устройстве, рассчитанном
+на 27128, дополнительные контакты с более
+высоким адресом, имеющиеся на ПЗУ большей
+емкости, будут подключены к VCC (логика 1).
+Следовательно, вам нужно будет записать
+двоичные данные объемом 16 КБ в верхние
+16 КБ памяти.
+<p>На этой диаграмме показаны конфигурации
+для записи в несколько типов ППЗУ.
+<br>&nbsp;
+<table BORDER COLS=5 WIDTH="720" BGCOLOR="#FFFFFF" >
+<tr>
+<td BGCOLOR="#C0C0C0"></td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>0000-3FFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>4000-7FFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>8000-BFFF</i></b></center>
+</td>
+
+<td BGCOLOR="#C0C0C0">
+<center><b><i>C000-FFFF</i></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27128/27C128</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#009900">Напишите здесь</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27256/27C256</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Оставьте пустым</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Напишите здесь</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>28C256</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Оставьте пустым</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Напишите здесь</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+
+<td BGCOLOR="#000000">
+<center><b><font color="#000000">Отсутствует</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td BGCOLOR="#C0C0C0">
+<div align=right><b><i>27512/W27C512</i></b></div>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Оставьте пустым</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Оставьте пустым</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#FF0000">Оставьте пустым</font></b></center>
+</td>
+
+<td>
+<center><b><font color="#009900">Напишите здесь</font></b></center>
+</td>
+</tr>
+</table>
+
+<p>Технически не имеет значения, что вы пишете
+в поле «оставьте пустым», поскольку компьютер
+не сможет это прочитать.
+<h4>
+<i><font face="Arial,Helvetica">Загрузки</font></i></h4>
+Некоторые из альтернативных ПЗУ могут
+быть не на 100% совместимы с программным
+обеспечением ZX Spectrum.
+<p><a href="download/leningrd/rom/t48-list.txt"><img SRC="icons/txt.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/t48-list.txt">
+Список совместимости с XGecu T48</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>TXT документ, 1,27 МБ</i> - Список
+ПЗУ, совместимых с программатором T48.
+<p><img SRC="scrnshot/sinclair-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/sinclair-1982.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/sinclair-1982.bin">
+Sinclair Бейсик ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Оригинальная
+Бейсик программа Sinclair 1982 года выпуска.
+<p><img SRC="scrnshot/baltic-v1.0-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/baltic-v1.0-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-v1.0.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-v1.0.bin">
+Балтик ПЗУ версия 1.0</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в Беларуси. Заменяет символы Sinclair на жирные,
+в стиле MS-DOS.
+<p><img SRC="scrnshot/baltic-v1.2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-1992.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-1992.bin">
+Балтик ПЗУ версия 1.2</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в Беларуси в 1992 году.
+<p><img SRC="scrnshot/baltik-turbo-v1.0.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/baltic-turbo-v1.0.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/baltic-turbo-v1.0.bin">
+Балтик Турбо ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в Беларуси.
+<p><img SRC="scrnshot/neti.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/neti-1986.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/neti-1986.bin">
+Новосибирск НЕТИ АиТ ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в Новосибирске, Российская СФСР, в 1986 году.
+<p><img SRC="scrnshot/ik30-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/ik30-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/ik-30-1991.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/ik-30-1991.bin">
+Веста ИК-30 ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в России в 1991 году.
+<p><img SRC="scrnshot/bk-001-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/bk-001-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/bk-001-3.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/bk-001-1990.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/bk-001-1990.bin">
+Спектр БК-001 ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в Твери, Российская СФСР, в 1990 году. Символы
+Sinclair заменены жирным шрифтом в стиле MS-DOS.
+Набор кириллических символов можно активировать,
+нажав клавишу Symbol Shift + Space.
+<p><img SRC="scrnshot/gw03.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/sinclair-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/gw03.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/gw03.bin">
+Gosh Wonderful ПЗУ версия 1.32</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+Джеффом Уилмутом в 2004 году. Обновленная
+версия Sinclair Бейсик.
+<p><a href="download/leningrd/rom/new/gw03.html"><img SRC="icons/html.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/gw03.html">
+Инструкции</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML страница, 25,9 КБ</i>
+<p><img SRC="scrnshot/opense-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/opense-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/opense-3.1.2.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/opense-3.1.2.bin">
+OpenSE Бейсик ПЗУ версия 3.1.2</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+в 2012 году. Обновленная версия Sinclair Бейсик.
+<p><a href="download/leningrd/rom/new/opense.pdf"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/opense.pdf">
+Инструкции</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF документ, 652 КБ</i>
+<p><img SRC="scrnshot/plus4-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/plus4-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/new/plus4.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/plus4.bin">
+Неофициальный Spectrum +4 Бейсик ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+Эндрю Оуэном в 2000 году. Обновленная версия
+Sinclair Бейсик.
+<p><a href="download/leningrd/rom/new/plus4.txt"><img SRC="icons/txt.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/new/plus4.txt">
+Инструкции</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>TXT документ, 652 КБ</i>
+<p><img SRC="scrnshot/cxema-diag-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/cxema-diag-4.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/diagnstc/cxema-diag.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/cxema-diag.bin">
+cxemateka.ru Диагностика ПЗУ</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 2,00 КБ</i> - Разработан
+Константином Айги. Тестирует буфер и оперативную
+память. Весь текст на русском языке. Запись
+в начало блока размером 16 КБ, соответствующего
+вашему ПЗУ. <i>(например, начиная с 0000, 4000
+или C000 - см. таблицу выше)</i>
+<p><img SRC="scrnshot/retro-diag-1.jpg" ALT="Screenshot" NOSAVE height=240 width=320><img SRC="scrnshot/retro-diag-2.jpg" ALT="Screenshot" NOSAVE height=240 width=320>
+<p><a href="download/leningrd/rom/diagnstc/retroleum-diag.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/retroleum-diag.bin">
+Retroleum Диагностика ПЗУ версия 1.71</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN данные, 16,0 КБ</i> - Разработан
+Филом Растоном в 2024 году. Чрезвычайно всеобъемлющий,
+позволяет протестировать практически
+все компоненты системы. В некоторых тестах
+могут возникать ошибки из-за различий в
+аппаратном обеспечении «Ленинграда-1»
+по сравнению с оригинальным ZX Spectrum.
+<p><a href="download/leningrd/rom/diagnstc/retroleum-diag.pdf"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/leningrd/rom/diagnstc/retroleum-diag.pdf">
+Инструкции</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF документ, 100 КБ</i> - Обратите
+внимание, что некоторые из описанных в
+этом документе действий по устранению
+неполадок применимы только к оригинальному
+ZX Spectrum.
+<p>
+<hr WIDTH="100%">Последнее обновление от 2 марта
+2025 года.
+<br>Фоновое изображение этой страницы, созданное
+<a href="https://github.com/tile-anon/tiles">tile-anon</a>.
+</body>
+</html>
