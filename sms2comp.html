@@ -1,0 +1,183 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en]C-CCK-MCD NetscapeOnline.co.uk  (Win98; U) [Netscape]">
+   <title>Sega Master System II Composite Video Mod - Alex J. Lowry's Electronics Homepage</title>
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="sega.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%">
+<h2>
+<i><font face="Arial,Helvetica">Sega Master System II Composite Video Mod</font></i></h2>
+<b>More photos and screenshots can be viewed on <a href="imgs-ms2.html">this
+page.</a></b>
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/smsc1_fs.jpg"><img SRC="photos/smsc1_th.jpg" ALT="Mod installed in an SMS2" NOSAVE height=185 width=320 align=RIGHT></a>First
+released in 1990, the Master System II is a cost-reduced version of the
+original Master System, with some features removed to reach a lower price
+point.
+<p>Among the features removed, the selection of video outputs was heavily
+reduced so that only the RF modulator remained. Not only is this the lowest
+quality video output, you have to tune in the TV to get it working and
+it doesn't work at all with monitors and modern TVs.
+<p>The easiest solution to these problems is to modify the system for composite
+video/audio output. While composite isn't the highest quality video option
+available, it's better than RF and works on almost every TV made since
+the 80's <i>(unless you have a "smart" TV with nothing but HDMI on the
+back, but such TVs often have disappointingly slow image latency anyway)</i>
+<p>There are some SMS2 video mods already available, but as far as I'm
+aware, they all require some varying degree of bodge wires. In some cases,
+you have to drill holes into the case to make way for extra connectors.
+There's got to be a better way...
+<p>The good news is that the SMS1 and SMS2 both use the same type of IC
+for converting RGB into composite video and sending it to the RF modulator.
+<i>(later
+SMS2s use an SMD equivalent that works exactly the same, as far as this
+mod is concerned)</i>
+<p>On the SMS1, pin 20 <i>(video out)</i> and pin 9 <i>(audio out)</i>
+of this IC supply a signal to both the A/V connector and the RF modulator
+through two separate sets of voltage leveling circuitry.
+<p>Thanks to these fortunate circumstances, modifying the SMS2 for composite
+video is as simple as changing a few components to match the component
+path that supplies composite video to the SMS1's A/V connector
+<p>I have designed a PCB that fits in place of the RF modulator and provides
+audio and video out through a 3.5mm jack, accessible through the existing
+hole in the case intended for the modulator.. This can be connected to
+a display using a standard two-channel 3.5mm-to-RCA cable <i>(usually sold
+for stereo audio applications).</i>
+<p>The video output from this mod is free of any noise or "jailbars". To
+see screenshots of a modded system in action, see the link at the top of
+this page.
+<p>This modification is entirely reversible, if at some point you decide
+to return the system to its original configuration.
+<h4>
+<i><font face="Arial,Helvetica">Installation Instructions</font></i></h4>
+<a href="download/sms2comp/schematic.gif"><img SRC="download/sms2comp/schematic.gif" ALT="Schematic" NOSAVE height=512 width=512 align=RIGHT></a><i><b>The
+following instructions are currently applicable only to PAL Master System
+IIs manufactured in 1992 or earlier!</b> (board revision IC BD M4Jr. PAL)
+If you have successfully installed this mod on an NTSC system or the later
+"IC BD M4Jr. PAL 2M" revision, I would appreciate if you could let me know
+your installation method via email, noting the polarity of the 10μF capacitor,
+so I can add it to this site - my address is on the homepage.</i>
+<p>This mod is fairly easy to install, so long as you have decent desoldering
+skills and equipment. I recommend getting a Chinese T12 soldering station
+with temperature display <i>(around $30 on eBay)</i> and an Engineer SS-02
+solder sucker <i>(also around $30, but be aware there are a lot of clones
+on the market - however, they may work well enough for this purpose).</i>
+<p>The SMS2's circuit board is decently good quality, but try not to be
+too heavy-handed while desoldering. You may find it easier to remove components
+if you carefully cut each component off of its leads before desoldering
+with wire cutters, so that each lead will fall out on its own.
+<p>Make sure all component leads are completely loose before trying to
+pull components out, especially the RF modulator; otherwise, you risk tearing
+solder pads off the board.
+<p>Before beginning, you'll need these components ready:
+<ul>
+<li>
+Composite video adapter PCB. <i>(you can get this from a fabricator such
+as <a href="https://jlcpcb.com">JLCPCB</a>)</i></li>
+
+<li>
+CUI/Same Sky SJ1-3525. <i>(3.5mm stereo jack connector)</i></li>
+
+<li>
+2.54mm male pin headers. <i>(at least 10 pins - you can cut a strip of
+these to the right size either with wire cutters or by snapping them to
+size by hand)</i></li>
+
+<li>
+A 75Ω resistor.</li>
+
+<li>
+A 10μF electrolytic capacitor with a rating of 6V or greater.</li>
+</ul>
+Start by removing these components:
+<ul>
+<li>
+RF Modulator</li>
+
+<li>
+R21 <i>(if your SMS2 is from a PAL-B region, this resistor is already the
+correct value and doesn't need to be changed - you can check the resistor's
+color bands if you're unsure)</i></li>
+
+<li>
+R27, R28 and R29</li>
+
+<li>
+C40</li>
+</ul>
+At this point, you can start adding in new components.
+<ul>
+<li>
+If you removed R21, install a 75Ω resistor in its place.</li>
+
+<li>
+Install a 10μF capacitor in place of C40 with the negative <i>(striped)</i>
+side facing towards the front of the PCB <i>(where the controller ports
+are).</i></li>
+</ul>
+The ferrite beads seen in the schematic serve as filters for high-frequency
+noise, in the same manner as the large ferrite beads often seen on A/V
+and computer cables. They add no resistance to the signal and should be
+left in place.
+<p>Now you can install the adapter PCB!
+<p>First, you'll need to solder pin headers to the adapter in all the holes
+that aren't used for the 3.5mm jack. The plastic parts should be underneath
+the PCB, since they raise the connector to the right height for the case
+hole.
+<p><a href="photos/msc12_fs.jpg"><img SRC="photos/msc12_th.jpg" ALT="Aligning pin headers" NOSAVE height=142 width=320 align=RIGHT></a>To
+keep the pins in place, you can use either one of the extra PCBs from the
+fabricator <i>(if your fabricator required that you have more than one
+board manufactured)</i> as seen in the photo on the right, or the former
+residence of the RF modulator on the Master System PCB.
+<p>Next, install the 3.5mm jack. Note that it helps to place the board
+on a piece of foam - such as the anti-static foam that ICs often come packaged
+in - to keep an even force on the connector as you solder it in.
+<p>Now that the adapter is ready, you can install it onto the Master System
+PCB. The foam trick also works well here, but note that there are no supports
+on the connector end of the adapter - therefore, the foam should be placed
+on the inward-facing end.
+<p>After soldering, cut off the excess length of the pin headers, especially
+if you installed the long side facing down as seen in the photo. Doing
+this ensures that the pins won't short out against the outer shielding.
+<p>Once the adapter is installed, your work is done! You can now reassemble
+the system, making sure to attach the heatsink back onto the 7805 regulator.
+Plug it in and give it a test - you should now have a working composite
+modded Master System II that looks no different on the outside than it
+did before!
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+<a href="download/sms2comp/sms2-comp-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/sms2comp/sms2-comp-r1-sch.pdf">
+Schematic</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 172 KB</i>
+<p><a href="download/sms2comp/sms2-comp-r1-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/sms2comp/sms2-comp-r1-gerbers.zip">
+PCB Gerbers</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 66.9 KB</i> - This is the Revision
+1 PCB. It's a slightly different shape than the Rev. 0 prototype seen in
+the photos to give it some extra rigidity, has a ground plane on both sides
+of the PCB for extra noise reduction and has a more accurate silkscreen
+<i>(the
+"Video" and "Audio" labels were accidentally swapped on the prototype).</i>
+<p><a href="download/sms2comp/sms2-comp-r1-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/sms2comp/sms2-comp-r1-kicad.zip">
+KiCad Files</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 2.21 MB</i> - Useful if you want
+to make modifications to the PCB. Made with KiCad 9.
+<p><a href="download/sms2comp/sms-fonts.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/sms2comp/sms-fonts.zip">
+Custom Fonts</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 47.9 KB</i> - Custom fonts used
+for the KiCad files. Only needed if you want to modify them.
+<p><a href="download/sms2comp/sms-schematics.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/sms2comp/sms-schematics.zip">
+Other Schematics</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 3.36 MB</i> - The schematics for
+both variants of the Master System, courtesy of <a href="https://www.smspower.org">SMS
+Power.</a>
+<p>
+<hr WIDTH="100%">Thanks to <a href="https://www.smspower.org">SMS Power</a>
+for providing full schematics of the Master System I and II.
+<p>Last updated on Mar 23, 2025.
+<br>This page was first uploaded on Mar 23, 2025.
+</body>
+</html>
