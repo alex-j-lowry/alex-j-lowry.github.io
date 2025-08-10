@@ -1,1 +1,258 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html><head>   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">   <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">   <title>Modular Ping - Alex J. Lowry's Electronics Homepage</title><link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></head><body text="#000000" link="#0000FF" vlink="#800080" background="stone2.gif"><a href="index.html"><img SRC="logo1.gif" height=107 width=640></a><hr WIDTH="100%"><img SRC="mdlrping.jpg" ALT="Modular Ping logo" NOSAVE height=352 width=640><h2><i><font face="Arial,Helvetica">Modular Ping</font></i></h2><b>More photos can be viewed on <a href="imgs-png.html">this page.</a></b><h4><i><font face="Arial,Helvetica">Introduction</font></i></h4><a href="photos/ping1_fs.jpg"><img SRC="photos/ping1_th.jpg" ALT="Modular Ping in operation" NOSAVE height=320 width=317 align=RIGHT></a>Datingall the way back to 1972, Atari's Pong was the first video game popularenough to become a household name <i>(though contrary to popular belief,it certainly wasn't the first video game ever produced!).</i><p>Atari co-founders Nolan Bushnell and Ted Dabney had already developeda video arcade game the previous year, known as Computer Space. Despitebeing more technically advanced than Pong, it didn't achieve the successthey were hoping for - the rules of the game weren't obvious, and playershad to read the instructions to understand how to play.<p>They quickly realized that arcade-goers preferred more intuitive videogames that were easy to pick up and play. In May 1972, Nolan visited ademonstration of the soon-to-be-released Magnavox Odyssey, an early consumer-gradehome game console based largely on analog circuitry. There, he realizedthat its simple "Tennis" game could be improved if it was implemented withthe same digital logic used in Computer Space.<p>The task of developing Pong was given to new hire Allan Alcorn, whowas instructed to create a digital tennis video game with counters to keeptrack of the score.<p>In the early 70's, microprocessors were expensive and rudimentary. Therefore,Pong was designed entirely with discrete TTL logic! It's a video game implementedwith no software whatsoever, a concept that sounds unthinkable nowadays.<p>Upon completing the basic game, Allan added some extra features to makethe game more interesting - the ball would speed up if players could keepup a volley without missing, and would bounce back at a variable angledepending on where the paddles hit it.<p>One of the last features added was sound. Timing signals that were alreadyin the circuit were fed through a loudspeaker to create the characteristicsounds that inspired the name "Pong". <i>(or "Ping" in the case of my replica,since Atari still holds the rights to the name "Pong".)</i><p>A few years after the development of Pong, large-scale integration wouldallow a simplified version of the game logic to be crammed into a singlecustom IC. However, these later home versions of Pong usually simplifiedthe ball velocity logic in comparison to the original arcade game.<p>In the years following the development of Pong, many other arcade gameswould be implemented entirely out of TTL logic. The introduction of theIntel 8080 CPU in 1974 gradually brought an end to this era of arcade gamingin favor of microprocessor-based games, and by 1980, production of TTLarcade games was a thing of the past.<h4><i><font face="Arial,Helvetica">Technical Description</font></i></h4>In Modular Ping, the circuitry of Pong has been separated into a "basesystem" of five PCBs.<ol><li><b>Power, Sync, Video:</b> The 5V power regulator/supply, synchronizationgenerator, and video output.</li><li><b>Paddles, Game Control:</b> Determines paddle position and handles gamelogic. <i>(Collision detection, game reset, demo mode, etc.)</i></li><li><b>Score:</b> Keeps track of both players' score in binary-coded decimal<i>(BCD)</i>format, which is converted into human-readable numerals by a 7-segmentdecoder IC.</li><li><b>Vertical Ball, Sound:</b> Controls the ball's vertical position, directionand speed, determining the angle at which the ball should return upon collisionwith the bats. Generates sound effects upon collisions and misses.</li><li><b>Horizontal Ball:</b> Controls the ball's horizontal position, directionand speed. Increases the ball's horizontal speed if players are able tomaintain a volley without missing the ball for long enough.</li></ol><a href="photos/ping6_fs.jpg"><img SRC="photos/ping6_th.jpg" ALT="Close-up of assembled system" NOSAVE height=203 width=320 align=RIGHT></a>Theoriginal Pong circuit contained some minor bugs which aren't normally noticeableduring gameplay. These bugs have been documented in two articles (<a href="https://www.worldphaco.com/uploads/LAWN_TENNIS.pdf">here</a>and <a href="https://www.worldphaco.com/uploads/ARCADE_MINI-PONG.pdf">here</a>)by <a href="https://www.worldphaco.com">Dr. Hugo R. Holden,</a> who hasdeveloped modifications to fix the errors without using any extra circuitry.I've implemented some of these fixes in Modular Ping, though some couldn'tbe implemented without increasing the number of components, since unusedlogic can only be connected "locally" on its respective PCB.<p>The following bugs have been corrected in Modular Ping:<ul><li><b>The "Ghost in the Machine":</b> The vertical speed of the ball is determinedupon collision with either bat by a 3-bit binary value. In the originalcircuit, the least significant bit was accidentally switched between players,resulting in the ball's rebound angle being partially determined by theopposite bat.</li><li><b>Ball trapped in blanking:</b> In extremely rare cases, it's possiblefor the ball to become trapped in the vertical blanking interval. In anunmodified original system, this would only occur rarely upon switchingthe machine on. It can only happen during gameplay if the range of thebats is modified to span the entire screen <i>(a currently unimplementedbugfix I may add in a later revision).</i></li><li><b>Weak net:</b> At some point, the 7493 counter ICs used in the sync generatorwere phased out in favor of the faster 7493A counter. The slight differencein propagation speed can affect the width of the net, potentially reducingit to the point that it's barely visible. By triggering the net flip-flopwith a different signal, the net remains the same width regardless of thecounter variant used.</li></ul>The PCBs connect to each other using two 40-pin IDC ribbon cables. You'llhave to make these cables yourself, since short cables with five connectorson them are difficult to find prefabricated. 40-pin IDC connectors canbe crimped with an ordinary vise or a specialized IDC crimping tool (availableonline for around $15-20).<p>The pinout of these connectors <i>(which I've named PingBus A and B)</i>can be found in the schematics, available below in the "Downloads" section.<p>The boards are designed to stack on top of each other with standardM3 screws and standoffs. Nylon fixtures can be used, but I recommend usingmetal ones to improve grounding between boards.<p>In total, the base system requires 63 ICs. This is slightly less thanthe original Pong circuit, due to the usage of the 74LS393, 74LS390 andNE556N - dual versions of the 74LS93, 74LS90 and NE555N, respectively.<p>The number of ICs which are no longer produced has also been reducedsignificantly. The only two components that aren't available directly fromMouser/Digikey are the 74LS48 used for decoding the score and the NE556Nused to generate the delay for each paddle. Due to the layout of the circuit,different NE556 variants will give different results, potentially causingincorrect paddle range or non-linear control. For correct operation, lookfor an NE556N produced by Signetics.<p>In the future, I may try designing an alternative paddle circuit thatuses a modern replacement for the NE556N, such as the 74LS221.<h4><i><font face="Arial,Helvetica">Changelog</font></i></h4><i>Revision 0:</i><br>Initial prototype.<ul><li>Upon switching the system on, the ball would only move vertically. Aftera few minutes of operation, the ball would incomprehensibly start movinghorizontally as it should. I figured out that this could be corrected byconnecting a 220pF capacitor between /H_BLANK and GND. I assume this bugmust be caused by the difference in switching speed of modern 74LSxx logiccompared to the 74xx logic used in the original system.</li><li>I attempted to improve the timing of the /H_SYNC signal using a spare XORgate, but this had the unintended effect of reducing the size of the paddles.</li></ul><i>Revision 1:</i><ul><li>220pF capacitor added to /H_BLANK signal, improving reliability of horizontalball movement.</li><li>Clock input of U6A flip-flop on sync/video PCB corrected to H_RESET. Theredrawn schematic I was following had it incorrectly labeled as CLK.</li><li>/H_SYNC signal generator reverted to original arcade circuit configuration.</li><li>100μF capacitors added between VCC and GND on each PCB to improve supplyvoltage stability. These aren't really necessary, but I figured it's betterto have the option of adding them if desired.</li></ul><h4><i><font face="Arial,Helvetica">Downloads</font></i></h4><a href="photos/ping8_fs.jpg"><img SRC="photos/ping8_th.jpg" ALT="Modular Ping in operation" NOSAVE height=201 width=320 align=RIGHT></a>Dueto the large number of PCBs, the "base set" of boards required to buildthe original game have been combined into a single ZIP archive.<p><a href="download/ping/ping-sync-video-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-sync-video-r1-bom.html">Interactive Bill of Materials - Power, Sync, Video</a></b><br>&nbsp;&nbsp;&nbsp; <i>HTML document, 373 KB</i><p><a href="download/ping/ping-paddles-gamectrl-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-paddles-gamectrl-r1-bom.html">Interactive Bill of Materials - Paddles, Game Control</a></b><br>&nbsp;&nbsp;&nbsp; <i>HTML document, 387 KB</i><p><a href="download/ping/ping-score-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-score-r1-bom.html">Interactive Bill of Materials - Score</a></b><br>&nbsp;&nbsp;&nbsp; <i>HTML document, 338 KB</i><p><a href="download/ping/ping-vball-sound-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-vball-sound-r1-bom.html">Interactive Bill of Materials - Vertical Ball, Sound</a></b><br>&nbsp;&nbsp;&nbsp; <i>HTML document, 359 KB</i><p><a href="download/ping/ping-hball-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-hball-r1-bom.html">Interactive Bill of Materials - Horizontal Ball</a></b><br>&nbsp;&nbsp;&nbsp; <i>HTML document, 307 KB</i><p><a href="download/ping/ping-sync-video-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-sync-video-r1-sch.pdf">Schematic - Power, Sync, Video</a></b><br>&nbsp;&nbsp;&nbsp; <i>PDF document, 512 KB</i><p><a href="photos/ping7_fs.jpg"><img SRC="photos/ping7_th.jpg" ALT="Close-up of assembled system" NOSAVE height=300 width=320 align=RIGHT></a><a href="download/ping/ping-paddles-gamectrl-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-paddles-gamectrl-r1-sch.pdf">Schematic - Paddles, Game Control</a></b><br>&nbsp;&nbsp;&nbsp; <i>PDF document, 608 KB</i><p><a href="download/ping/ping-score-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-score-r1-sch.pdf">Schematic - Score</a></b><br>&nbsp;&nbsp;&nbsp; <i>PDF document, 509 KB</i><p><a href="download/ping/ping-vball-sound-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-vball-sound-r1-sch.pdf">Schematic - Vertical Ball, Sound</a></b><br>&nbsp;&nbsp;&nbsp; <i>PDF document, 459 KB</i><p><a href="download/ping/ping-hball-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-hball-r1-sch.pdf">Schematic - Horizontal Ball</a></b><br>&nbsp;&nbsp;&nbsp; <i>PDF document, 429 KB</i><p><a href="download/ping/ping-basesystem-r1-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-basesystem-r1-gerbers.zip">PCB Gerbers - Base System</a></b><br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.63 MB</i> - Production files foreach PCB in the base system.<p><a href="download/ping/ping-basesystem-r1-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-basesystem-r1-kicad.zip">KiCad Files - Base System</a></b><br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 3.79 MB</i> - Useful if you wantto make modifications to the PCBs. Made with KiCad 9.<p><a href="download/ping/fonts-ping.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/fonts-ping.zip">Custom Fonts</a></b><br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 131 KB</i> - Custom fonts used forthe KiCad files. Only needed if you want to modify these files.<p><a href="download/ping/other-pong-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/other-pong-sch.zip">Other Schematics</a></b><br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 12.8 MB</i> - Various schematicsand technical descriptions of the original Pong circuit from other sources.Note that there are several errors in "REDRAWN_PongSchematic.pdf".<p><a href="download/ping/original-pong-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/original-pong-sch.zip">Original Schematics</a></b><br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 13.5 MB</i> - Atari's original schematicsfor revision E of Pong in the highest quality available. Taken from the1974 Atari Operator's Handbook, the rest of which is available <a href="https://archive.org/details/atari-computer-games-operators-handbook-600DPI">here.</a>Note that pins 1 and 10 of gate A6 are incorrectly switched - this causeda minor bug in the original arcade circuit.<p><hr WIDTH="100%">Thanks to:<br>&nbsp;&nbsp;&nbsp; Willy Higginbotham: Created the <a href="https://pong-story.com/1958.htm">firstelectronic tennis game</a> in 1958, which was viewed on an oscilloscope.<p>&nbsp;&nbsp;&nbsp; Ralph Baer: Designed the <a href="https://pong-story.com/sanders.htm">firstvideo game that worked with a household TV set.</a> His invention wouldlater become the <a href="https://pong-story.com/odyssey.htm">MagnavoxOdyssey,</a> the first mass-produced video game console and the inspirationfor Pong.<p>&nbsp;&nbsp;&nbsp; Allan Alcorn, Nolan Bushnell and Ted Dabney: Developedthe <a href="https://pong-story.com/atpong1.htm">arcade version of Pong.</a><p>&nbsp;&nbsp;&nbsp; <a href="https://www.worldphaco.com">Dr. Hugo R.Holden:</a> Reverse engineered the functionality of Pong, creating an excellentexplanation of how each section of the system works.<p>&nbsp;&nbsp;&nbsp; <a href="https://falstad.com">Paul Falstad:</a> Createda <a href="https://www.falstad.com/pong">logic simulation</a> showing howeach section of Pong works.<p>&nbsp;&nbsp;&nbsp; <a href="https://pong-story.com">David Winter:</a>Extensively documented the early history of video games <i>(including themany variants of Pong)</i> on <a href="https://pong-story.com">pong-story.com.</a><p>Last updated on Aug 10, 2025.<br>This page was first uploaded on Aug 10, 2025.</body></html>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
+   <title>Modular Ping - Alex J. Lowry's Electronics Homepage</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="stone2.gif">
+<a href="index.html"><img SRC="logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%"><img SRC="mdlrping.jpg" ALT="Modular Ping logo" NOSAVE height=352 width=640>
+<h2>
+<i><font face="Arial,Helvetica">Modular Ping</font></i></h2>
+<b>More photos can be viewed on <a href="imgs-png.html">this page.</a></b>
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/ping1_fs.jpg"><img SRC="photos/ping1_th.jpg" ALT="Modular Ping in operation" NOSAVE height=320 width=317 align=RIGHT></a>Dating
+all the way back to 1972, Atari's Pong was the first video game popular
+enough to become a household name <i>(though contrary to popular belief,
+it certainly wasn't the first video game ever produced!).</i>
+<p>Atari co-founders Nolan Bushnell and Ted Dabney had already developed
+a video arcade game the previous year, known as Computer Space. Despite
+being more technically advanced than Pong, it didn't achieve the success
+they were hoping for - the rules of the game weren't obvious, and players
+had to read the instructions to understand how to play.
+<p>They quickly realized that arcade-goers preferred more intuitive video
+games that were easy to pick up and play. In May 1972, Nolan visited a
+demonstration of the soon-to-be-released Magnavox Odyssey, an early consumer-grade
+home game console based largely on analog circuitry. There, he realized
+that its simple "Tennis" game could be improved if it was implemented with
+the same digital logic used in Computer Space.
+<p>The task of developing Pong was given to new hire Allan Alcorn, who
+was instructed to create a digital tennis video game with counters to keep
+track of the score.
+<p>In the early 70's, microprocessors were expensive and rudimentary. Therefore,
+Pong was designed entirely with discrete TTL logic! It's a video game implemented
+with no software whatsoever, a concept that sounds unthinkable nowadays.
+<p>Upon completing the basic game, Allan added some extra features to make
+the game more interesting - the ball would speed up if players could keep
+up a volley without missing, and would bounce back at a variable angle
+depending on where the paddles hit it.
+<p>One of the last features added was sound. Timing signals that were already
+in the circuit were fed through a loudspeaker to create the characteristic
+sounds that inspired the name "Pong". <i>(or "Ping" in the case of my replica,
+since Atari still holds the rights to the name "Pong".)</i>
+<p>A few years after the development of Pong, large-scale integration would
+allow a simplified version of the game logic to be crammed into a single
+custom IC. However, these later home versions of Pong usually simplified
+the ball velocity logic in comparison to the original arcade game.
+<p>In the years following the development of Pong, many other arcade games
+would be implemented entirely out of TTL logic. The introduction of the
+Intel 8080 CPU in 1974 gradually brought an end to this era of arcade gaming
+in favor of microprocessor-based games, and by 1980, production of TTL
+arcade games was a thing of the past.
+<h4>
+<i><font face="Arial,Helvetica">Technical Description</font></i></h4>
+In Modular Ping, the circuitry of Pong has been separated into a "base
+system" of five PCBs.
+<ol>
+<li>
+<b>Power, Sync, Video:</b> The 5V power regulator/supply, synchronization
+generator, and video output.</li>
+
+<li>
+<b>Paddles, Game Control:</b> Determines paddle position and handles game
+logic. <i>(Collision detection, game reset, demo mode, etc.)</i></li>
+
+<li>
+<b>Score:</b> Keeps track of both players' score in binary-coded decimal
+<i>(BCD)</i>
+format, which is converted into human-readable numerals by a 7-segment
+decoder IC.</li>
+
+<li>
+<b>Vertical Ball, Sound:</b> Controls the ball's vertical position, direction
+and speed, determining the angle at which the ball should return upon collision
+with the bats. Generates sound effects upon collisions and misses.</li>
+
+<li>
+<b>Horizontal Ball:</b> Controls the ball's horizontal position, direction
+and speed. Increases the ball's horizontal speed if players are able to
+maintain a volley without missing the ball for long enough.</li>
+</ol>
+<a href="photos/ping6_fs.jpg"><img SRC="photos/ping6_th.jpg" ALT="Close-up of assembled system" NOSAVE height=203 width=320 align=RIGHT></a>The
+original Pong circuit contained some minor bugs which aren't normally noticeable
+during gameplay. These bugs have been documented in two articles (<a href="https://www.worldphaco.com/uploads/LAWN_TENNIS.pdf">here</a>
+and <a href="https://www.worldphaco.com/uploads/ARCADE_MINI-PONG.pdf">here</a>)
+by <a href="https://www.worldphaco.com">Dr. Hugo R. Holden,</a> who has
+developed modifications to fix the errors without using any extra circuitry.
+I've implemented some of these fixes in Modular Ping, though some couldn't
+be implemented without increasing the number of components, since unused
+logic can only be connected "locally" on its respective PCB.
+<p>The following bugs have been corrected in Modular Ping:
+<ul>
+<li>
+<b>The "Ghost in the Machine":</b> The vertical speed of the ball is determined
+upon collision with either bat by a 3-bit binary value. In the original
+circuit, the least significant bit was accidentally switched between players,
+resulting in the ball's rebound angle being partially determined by the
+opposite bat.</li>
+
+<li>
+<b>Ball trapped in blanking:</b> In extremely rare cases, it's possible
+for the ball to become trapped in the vertical blanking interval. In an
+unmodified original system, this would only occur rarely upon switching
+the machine on. It can only happen during gameplay if the range of the
+bats is modified to span the entire screen <i>(a currently unimplemented
+bugfix I may add in a later revision).</i></li>
+
+<li>
+<b>Weak net:</b> At some point, the 7493 counter ICs used in the sync generator
+were phased out in favor of the faster 7493A counter. The slight difference
+in propagation speed can affect the width of the net, potentially reducing
+it to the point that it's barely visible. By triggering the net flip-flop
+with a different signal, the net remains the same width regardless of the
+counter variant used.</li>
+</ul>
+The PCBs connect to each other using two 40-pin IDC ribbon cables. You'll
+have to make these cables yourself, since short cables with five connectors
+on them are difficult to find prefabricated. 40-pin IDC connectors can
+be crimped with an ordinary vise or a specialized IDC crimping tool (available
+online for around $15-20).
+<p>The pinout of these connectors <i>(which I've named PingBus A and B)</i>
+can be found in the schematics, available below in the "Downloads" section.
+<p>The boards are designed to stack on top of each other with standard
+M3 screws and standoffs. Nylon fixtures can be used, but I recommend using
+metal ones to improve grounding between boards.
+<p>In total, the base system requires 63 ICs. This is slightly less than
+the original Pong circuit, due to the usage of the 74LS393, 74LS390 and
+NE556N - dual versions of the 74LS93, 74LS90 and NE555N, respectively.
+<p>The number of ICs which are no longer produced has also been reduced
+significantly. The only two components that aren't available directly from
+Mouser/Digikey are the 74LS48 used for decoding the score and the NE556N
+used to generate the delay for each paddle. Due to the layout of the circuit,
+different NE556 variants will give different results, potentially causing
+incorrect paddle range or non-linear control. For correct operation, look
+for an NE556N produced by Signetics.
+<p>In the future, I may try designing an alternative paddle circuit that
+uses a modern replacement for the NE556N, such as the 74LS221.
+<h4>
+<i><font face="Arial,Helvetica">Changelog</font></i></h4>
+<i>Revision 0:</i>
+<br>Initial prototype.
+<ul>
+<li>
+Upon switching the system on, the ball would only move vertically. After
+a few minutes of operation, the ball would incomprehensibly start moving
+horizontally as it should. I figured out that this could be corrected by
+connecting a 220pF capacitor between /H_BLANK and GND. I assume this bug
+must be caused by the difference in switching speed of modern 74LSxx logic
+compared to the 74xx logic used in the original system.</li>
+
+<li>
+I attempted to improve the timing of the /H_SYNC signal using a spare XOR
+gate, but this had the unintended effect of reducing the size of the paddles.</li>
+</ul>
+<i>Revision 1:</i>
+<ul>
+<li>
+220pF capacitor added to /H_BLANK signal, improving reliability of horizontal
+ball movement.</li>
+
+<li>
+Clock input of U6A flip-flop on sync/video PCB corrected to H_RESET. The
+redrawn schematic I was following had it incorrectly labeled as CLK.</li>
+
+<li>
+/H_SYNC signal generator reverted to original arcade circuit configuration.</li>
+
+<li>
+100μF capacitors added between VCC and GND on each PCB to improve supply
+voltage stability. These aren't really necessary, but I figured it's better
+to have the option of adding them if desired.</li>
+</ul>
+
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+<a href="photos/ping8_fs.jpg"><img SRC="photos/ping8_th.jpg" ALT="Modular Ping in operation" NOSAVE height=201 width=320 align=RIGHT></a>Due
+to the large number of PCBs, the "base set" of boards required to build
+the original game have been combined into a single ZIP archive.
+<p><a href="download/ping/ping-sync-video-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-sync-video-r1-bom.html">
+Interactive Bill of Materials - Power, Sync, Video</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 373 KB</i>
+<p><a href="download/ping/ping-paddles-gamectrl-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-paddles-gamectrl-r1-bom.html">
+Interactive Bill of Materials - Paddles, Game Control</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 387 KB</i>
+<p><a href="download/ping/ping-score-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-score-r1-bom.html">
+Interactive Bill of Materials - Score</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 338 KB</i>
+<p><a href="download/ping/ping-vball-sound-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-vball-sound-r1-bom.html">
+Interactive Bill of Materials - Vertical Ball, Sound</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 359 KB</i>
+<p><a href="download/ping/ping-hball-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-hball-r1-bom.html">
+Interactive Bill of Materials - Horizontal Ball</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 307 KB</i>
+<p><a href="download/ping/ping-sync-video-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-sync-video-r1-sch.pdf">
+Schematic - Power, Sync, Video</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 512 KB</i>
+<p><a href="photos/ping7_fs.jpg"><img SRC="photos/ping7_th.jpg" ALT="Close-up of assembled system" NOSAVE height=300 width=320 align=RIGHT></a><a href="download/ping/ping-paddles-gamectrl-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-paddles-gamectrl-r1-sch.pdf">
+Schematic - Paddles, Game Control</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 608 KB</i>
+<p><a href="download/ping/ping-score-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-score-r1-sch.pdf">
+Schematic - Score</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 509 KB</i>
+<p><a href="download/ping/ping-vball-sound-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-vball-sound-r1-sch.pdf">
+Schematic - Vertical Ball, Sound</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 459 KB</i>
+<p><a href="download/ping/ping-hball-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-hball-r1-sch.pdf">
+Schematic - Horizontal Ball</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 429 KB</i>
+<p><a href="download/ping/ping-basesystem-r1-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-basesystem-r1-gerbers.zip">
+PCB Gerbers - Base System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.63 MB</i> - Production files for
+each PCB in the base system.
+<p><a href="download/ping/ping-basesystem-r1-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/ping-basesystem-r1-kicad.zip">
+KiCad Files - Base System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 3.79 MB</i> - Useful if you want
+to make modifications to the PCBs. Made with KiCad 9.
+<p><a href="download/ping/fonts-ping.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/fonts-ping.zip">
+Custom Fonts</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 131 KB</i> - Custom fonts used for
+the KiCad files. Only needed if you want to modify these files.
+<p><a href="download/ping/other-pong-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/other-pong-sch.zip">
+Other Schematics</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 12.8 MB</i> - Various schematics
+and technical descriptions of the original Pong circuit from other sources.
+Note that there are several errors in "REDRAWN_PongSchematic.pdf".
+<p><a href="download/ping/original-pong-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/ping/original-pong-sch.zip">
+Original Schematics</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 13.5 MB</i> - Atari's original schematics
+for revision E of Pong in the highest quality available. Taken from the
+1974 Atari Operator's Handbook, the rest of which is available <a href="https://archive.org/details/atari-computer-games-operators-handbook-600DPI">here.</a>
+Note that pins 1 and 10 of gate A6 are incorrectly switched - this caused
+a minor bug in the original arcade circuit.
+<p>
+<hr WIDTH="100%">Thanks to:
+<br>&nbsp;&nbsp;&nbsp; Willy Higginbotham: Created the <a href="https://pong-story.com/1958.htm">first
+electronic tennis game</a> in 1958, which was viewed on an oscilloscope.
+<p>&nbsp;&nbsp;&nbsp; Ralph Baer: Designed the <a href="https://pong-story.com/sanders.htm">first
+video game that worked with a household TV set.</a> His invention would
+later become the <a href="https://pong-story.com/odyssey.htm">Magnavox
+Odyssey,</a> the first mass-produced video game console and the inspiration
+for Pong.
+<p>&nbsp;&nbsp;&nbsp; Allan Alcorn, Nolan Bushnell and Ted Dabney: Developed
+the <a href="https://pong-story.com/atpong1.htm">arcade version of Pong.</a>
+<p>&nbsp;&nbsp;&nbsp; <a href="https://www.worldphaco.com">Dr. Hugo R.
+Holden:</a> Reverse engineered the functionality of Pong, creating an excellent
+explanation of how each section of the system works.
+<p>&nbsp;&nbsp;&nbsp; <a href="https://falstad.com">Paul Falstad:</a> Created
+a <a href="https://www.falstad.com/pong">logic simulation</a> showing how
+each section of Pong works.
+<p>&nbsp;&nbsp;&nbsp; <a href="https://pong-story.com">David Winter:</a>
+Extensively documented the early history of video games <i>(including the
+many variants of Pong)</i> on <a href="https://pong-story.com">pong-story.com.</a>
+<p>Last updated on Aug 10, 2025.
+<br>This page was first uploaded on Aug 10, 2025.
+</body>
+</html>
