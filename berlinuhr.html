@@ -80,6 +80,11 @@ is added to the zone above.</li>
 After 23:59, the clock resets to 00:00.
 <p>The display PCB has numbers printed under each LED so that the clock
 is easier to read.
+<p>The brightness of the LEDs is determined by the three resistor packs on the
+display PCB. I recommend 2KΩ packs, but if you plan on placing the clock in
+a well-lit environment, you may want to use 1KΩ packs instead. Resistor packs
+lower than 1KΩ are not recommended, as the LEDs are driven directly by CMOS
+logic outputs.
 <h4>
 <i><font face="Arial,Helvetica">Downloads</font></i></h4>
 <a href="photos/brln6_fs.jpg"><img SRC="photos/brln6_th.jpg" ALT="Power connectors" NOSAVE height=198 width=320 align=RIGHT></a><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html">
@@ -122,7 +127,7 @@ the KiCad files. Only needed if you want to modify these files.
 <br>&nbsp;&nbsp;&nbsp; <a href="http://www.hackersbench.com/index.html">John
 Schuch</a> for designing the <a href="http://www.hackersbench.com/Projects/1Hz/">4060
 timebase circuit</a> used in this clock.
-<p>Last updated on Aug 10, 2025.
+<p>Last updated on Aug 11, 2025.
 <br>This page was first uploaded on Aug 10, 2025.
 </body>
 </html>
