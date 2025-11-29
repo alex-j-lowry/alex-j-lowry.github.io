@@ -1,0 +1,313 @@
+<html>
+<head>
+<title>NOSTALCOMP - nostalgic microcomputers, especially single-board computers (PMI-80, TEMS 8003, PETR, etc.)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-LANGuage" content="cs">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="robots" content="ALL, FOLLOW">
+<meta name="GOOGLEBOT" content="ALL, FOLLOW">
+<meta name="description" content="NOSTALCOMP - nostalgic microcomputers, especially single-board computers (PMI-80, TEMS 8003, PETR, etc.)">
+<meta name="keywords" content="nostalcomp, pmi-80, tems, 8080, Z-80, 8085, 8255, 6502, 8155, mikroprocesor, assembler, byte, počítač">
+<link rel="STYLESHEET" href="nostalcomp-files/nostalstyle.css" type="text/css">
+</head>
+
+<body style="background-image: url('nostalcomp-files/bg.gif')">
+<div id="obsah">
+<div id="obsah1" style="background-image: url('nostalcomp-files/leftback.png')">
+<div id="levypanel">
+<div id="levypanel-obsah">
+
+<h4 align="center" class="titulek">NOSTALCOMP.cz</h4>
+<p>
+<a class="obr" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/index.php" title="ORG $0000 ;nostalcomp">
+<img src="nostalcomp-files/logo_4.png" border="0" alt="nostalcomp.cz">
+</a>
+<!-- <br><br> //-->
+</p>
+<p></p>
+<div class="menusez" align="left">
+<u>Main menu:</u><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/index.php">ORG Main</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/owebu.php">About this site</a><br>
+LXI	SP, $23FF<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/nabidka.php"> PMI PCB Offer</a><br>
+CALL <a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/aktualne.php">news</a><br>
+MVI A, $FF<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/nostal8080.php">Nostalcomp 8080</a><br>
+CALL pmi<br>
+<img src="nostalcomp-files/slozka.png" width="20" height="16" border="0" alt="nostalcomp.cz">&nbsp;&nbsp;<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/pmi80.php">PMI-80</a><br>
+CALL tems<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/tems8003.php">TEMS 80-03A</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/tems4x.php">TEMS 48, 49, 51</a><br>
+CALL zilina<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/sms_zilina.php">ŠMS VÚVT Žilina</a><br>
+NOP<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/savia.php">SAVIA 84</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cvicny8080.php">8080 trainer</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/ncb85.php">NCB 85</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/test48.php">TEST 48</a><br>
+CALL petr<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/petr.php">Petr</a><br>
+OR replica<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/petr_rep.php">Petr replica</a><br>
+NOP<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/jednodesky.php">What are SBCs</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/slavni.php">Famous SBCs</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/topsecret85.php">TOP SECRET 85</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/topsecret31.php">TOP SECRET 31</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/topsecret537.php">TOP SECRET 537</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/bob85.php">BOB-85</a><br>
+
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu6502.php">6502</a> AND <a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu6502.php">Junior</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/junior_loader.php">Junior PC Loader</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/junior_disp.php">Junior display</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu1802.php">1802</a> AND <a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu1802.php">Elf</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu1804.php">1804</a> AND <a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu1804.php">VIP</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu8830.php">8830</a> AND <a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu8830.php">JU+TE</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu74_index.php">74xx CPU</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/cpu3000.php">3000 bit-slice CPU</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/plan80.php">PLAN-80</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/specialyst.php">SPECIALIST</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/ti66.php">TI-66</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/kalkulajda.php">Calculator</a><br>
+
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zx80_rep.php">ZX-80 replica</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zx80_soft.php">ZX-80 software</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zx81_rep.php">ZX-81 replica</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zx81_soft.php">ZX-81 software</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zx81_paper.php">ZX-81 paper</a><br>
+NOP<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/emo.php">EMO modules</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/digistav.php">Digital kits</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/pomucky.php">Tools</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/smradocuc.php">Fume extractor</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/zdroje.php">8080 power supply</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/eprom.php">Eprom eraser</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/g540.php">G540 programmer</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/isp.php">ISP programmer</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/hexapod.php">HEXAGO</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/rarity.php">Rarities</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/kamdal.php">Where next?</a><br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/kontakt.php">Contact</a><br>
+IN A, menu<br>
+XOR B<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/proc.php">AND Why?</a><br>
+JZ $0000<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/relayvac.php">Relay-Vac</a><br>
+JNZ menu_item<br>
+CALL site<br>
+<a class="menu" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/index.php">JMP $0000</a>
+<br><br>
+<p align="center">
+<a class="obr" href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/rss.xml">
+<img src="nostalcomp-files/rss20_2.gif" width="53" height="15" border="0" alt="RSS kanál Nostalcomp.cz">
+</a>
+</p>
+<br>
+<p align="center">
+<!-- adexpert.cz (NOSTALCOMP_menu 120x240px) -->
+</p><div style="width: 120px; height: 240px; overflow: hidden;"><a href="https://web.archive.org/web/20131023030140/http://adexpert.cz/domena/nostalcomp.cz" style="display: block; width: 118px; height: 238px; text-decoration: none; background: white url('nostalcomp-files/adhere-120x240.jpg') no-repeat center center; border: 1px solid gray;">&nbsp;</a><img src="nostalcomp-files/track_002.htm"></div>
+<!-- adexpert.cz end -->
+<p></p>
+</div>
+</div>
+</div>
+
+<div id="hlavnipanel">
+<div id="hlavnipanel-obsah">
+
+<p align="center">
+<table align="center" cellspacing="0" cellpadding="0" border="0" cols="2">  
+<tbody><tr>
+<td width="20"><img src="nostalcomp-files/reklama.gif" width="20" height="60" border="0"></td>
+<td width="468">
+<!-- adexpert.cz (NOSTALCOMP.cz 468x60px) -->
+<div style="width: 468px; height: 60px; overflow: hidden;"><a href="https://web.archive.org/web/20131023030134/http://www.tele3.cz" style="border:none;text-decoration:none;margin:0px;padding:0px" target="_blank"><img style="border:none;margin:0px;padding:0px" src="nostalcomp-files/afd63987e2fe73609d785f4618d1422a3b208d11.jpg"></a><img src="nostalcomp-files/track_003.htm"></div>
+<!-- adexpert.cz end -->
+</td>
+</tr>
+</tbody></table>
+</p>
+
+<hr align="center" width="90%" size="1" color="blue">
+
+
+
+<h1 align="center"><font color="red">SAVIA 84 microcomputer</font></h1>
+<hr align="center" width="90%" size="1" color="blue">
+<br>
+
+<p>
+The page <a href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/proc.php">featuring</a> amateur microcomputers also included the <b>SAVIA 84</b> computer with a Z80 processor. Since I managed to obtain not only complete documentation, but also photographs of functional, amateur-built specimens, I decided to devote a separate page to the Savia.
+</p>
+
+<p> 
+The Savia 84 probably dates back to 1984, but it was not published until 1990 in the book <b>Radioamatérské Konstrukce 4 (Amateur Radio Designs 4)</b>. <i style="color: #7f7f7f">(Correction: An earlier version of the Savia 84 was published in the book <a href="https://www.8bity.cz/2022/kniha-mikroprocesor-z80-a-jeho-aplikace-jaroslav-tomas-hyan/">"Mikroprocesor Z80 a jeho aplikace"</a> in 1984.)</i> The author of the Savia is the famous <b>Jaroslav Tomáš Hyan</b>, whose computer and electronic designs were enjoyed by many of us in the 1970's and 1980's. Savia is based on the <b>Z80 (U880)</b> processor. The <b>Monitor</b>, whose hexadecimal listing was also published in the book, is stored on a <b>2758 EPROM</b>. The 2758 is identical to the better-known Intel 2708 or Tesla 8708, but it only requires a single <b>+5V</b> power supply. However, few people would use it today. As mentioned below, it would be more appropriate to use the 2716 or even newer (e.g. 2764) in a modern build, even if it is not fully utilized. The <b>RAM</b> is <b>6116</b>. A simple terminal operated by the well-known <b>8255</b> I/O controller is used for communication with the operator. The terminal consists of a hexadecimal <b>keyboard</b> (24 keys) and a seven-segment <b>LED display</b> (8 characters). The connection is very simple and its elegance is reminiscent of the <a href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/pmi80.php">PMI-80</a>. If you would like to build a Savia, it is not difficult at all. Below you will find a wiring diagram, a complete user's guide, the monitor's binary code (from a working model), and suggestions for simplification. All components are easily obtainable, so go ahead! Even after all these years, Savia is still suitable as an introductory computer for getting acquainted with the Z80 processor and single board computers in general.   
+</p>
+
+<p align="center">
+<a href="nostalcomp-files/savia_sch1.jpg" title="SAVIA 84 schematic"><img src="nostalcomp-files/savia_sch1_th.jpg" width="500" height="375" border="0" alt="SAVIA 84 schematic" title="Click to enlarge image"></a>
+</p>
+
+<p align="center">
+<a href="nostalcomp-files/savia_sch2.jpg" title="SAVIA 84 schematic"><img src="nostalcomp-files/savia_sch2_th.jpg" width="500" height="375" border="0" alt="SAVIA 84 schematic" title="Click to enlarge image"></a>
+</p>
+
+<p>
+And this is what the <b>prototype computer</b> looked like, built on a prototyping board and encased in a neat plastic box. Nice, isn't it?
+</p>
+
+<p align="center">
+<table align="center" width="650" cellspacing="0" cellpadding="10" cols="2" border="0">
+<tbody><tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia_orig1.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia_orig1_th.jpg" width="300" height="200" border="0" alt="original SAVIA 84" title="Click to enlarge image"></a>
+<br>original SAVIA 84 - board
+</td>
+<td>
+<a href="nostalcomp-files/savia_orig2.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia_orig2_th.jpg" width="300" height="200" border="0" alt="original SAVIA 84" title="Click to enlarge image"></a>
+<br>finished original SAVIA 84
+</td>
+</tr>
+</tbody></table>
+</p>
+<br>
+<p>
+Below are files with documentation (in Czech) and monitor available for download. The monitor has a range of 2KB because it was designed for a <b>2716</b> EPROM, but it is still the original monitor, only supplemented with empty <code>$FF</code> values up to a capacity of 2KB. When using a 1KB ROM, you only need to load the first 1024 bytes.
+</p>
+<br>
+<p align="center">
+<img src="nostalcomp-files/pdf_ico.gif" width="51" height="50" border="0" align="middle"> &nbsp;&nbsp;&nbsp; <a href="nostalcomp-files/savia84.pdf"><b>SAVIA 84</b></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="nostalcomp-files/zip_ico.gif" width="51" height="50" border="0" align="middle"> &nbsp;&nbsp;&nbsp; <a href="nostalcomp-files/savia84_monitor.zip"><b>Savia Monitor</b></a>
+</p>
+<br>
+
+<p>
+Since the original monitor displays the number <b>9</b> without a "<b>tail</b>", I tried to fix it. I disassembled the monitor and searched for the character table. The tail should be added to the nine by changing the value <code>$18</code> at address <code>$03CA</code> <b>to</b> <code>$10</code>. The <b>character table</b> for digits ranges from <code>$03C1</code> (number 0) to <code>$03CA</code> (number 9). This is followed by hex characters A-F and other letters of the alphabet, quotation marks, an equal sign, and it ends with a space (blank character) <code>$7F</code> at <code>$03E4</code>. The values are inverted and the character codes correspond exactly to the <a href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/junior_disp.php">tool</a> that I created for the Junior. The modification described above should work, but it has not been tested. 
+</p>
+
+<br>
+
+<h3 align="center"><font color="red">Simplification of the Savia 84</font></h3>
+<p>
+The SAVIA is very simple, but it can be <b>simplified</b> even further without affecting its functionality. Of the total number of 10 integrated circuits, 2 can easily be omitted.
+If we use a <b>2MHz</b> crystal, we can completely omit the divider and thus the entire <b>7474 (IO3)</b>. We can also omit the <b>7400 (IO7)</b>. To do this, two modifications are necessary. The first is to use the <b>/MREQ</b> signal directly to release the 3205 decoder (to /E1 or /E2). This saves one 7400 gate. We will permanently connect the E3 input of the decoder to +5V via a 4K7 resistor. We will save the remaining 7400 gates by moving the <b>3205</b> address decoder (which can be replaced with a 74138) one address wire higher to A11-A13. The EPROM's /CS will remain on /CS0 of the decoder. The RAM's /CS is now connected to /CS3 of the address decoder. At the same time, we can replace the 1KB <b>2758</b> EPROM with the more affordable <b>2716</b> with a capacity of 2KB, with the entire capacity available. The decoder now pages in increments of <b>2KB</b>.
+</p>
+
+
+
+<br>
+<h3 align="center"><font color="red">Milan's Savia 84</font></h3>
+<p>
+The first Savia 84 build I have seen was sent by <a href="https://milanp.webnode.cz/pocitace/retro/savia-84/">Milan Palička.</a> Compared to the original, however, his Savia is considerably expanded. It includes a speaker, LEDs, an 8253 timer, another 8255, and, most importantly, a serial interface with an 8251A. An interesting feature is the use of <b>VFDs</b>, since LED displays were unavailable at the time. However, in 2011, inspired by the "nostalgia wave," Milan rebuilt his Savia with seven-segment LED displays. :-) The RAM is 2KB GM76C28, and the EPROM is also 2KB 2716. The processor board is built on a universal SAPI 1 system board and can therefore be operated and powered from a SAPI power supply:
+</p>
+<p align="center">
+<table align="center" width="650" cellspacing="0" cellpadding="10" cols="2" border="0">
+<tbody><tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia6.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia6_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 with VFDs
+</td>
+<td>
+<a href="nostalcomp-files/savia1.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia1_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA with LED displays
+</td>
+</tr>
+<tr align="center" valign="middle"><td colspan="2">&nbsp;</td></tr>
+<tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia2.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia2_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 - CPU board
+</td>
+<td>
+<a href="nostalcomp-files/savia3.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia3_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 - terminal board
+</td>
+</tr>
+<tr align="center" valign="middle"><td colspan="2">&nbsp;</td></tr>
+<tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia4.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia4_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>powered from SAPI
+</td>
+<td>
+<a href="nostalcomp-files/savia5.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia5_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA in operation
+</td>
+</tr>
+</tbody></table>
+</p>
+
+<br>
+<h3 align="center"><font color="red">Martin's Savia 84</font></h3>
+<p>
+Martin sent more pictures of a working Savia 84. As can be seen from the pictures, he used a 6264 RAM (8KB) backed up by a 3V button battery (CR2032). The EPROM is a 2KB 2716. The frequency of the crystal oscillator (8MHz) is reduced by a 7493A divider. Instead of the 3205 circuit, an identical 74138 is used. Martin's Savia 84 is also built on universal boards:
+</p>
+
+<p align="center">
+<table align="center" width="650" cellspacing="0" cellpadding="10" cols="2" border="0">
+<tbody><tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia7.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia7_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 overall view
+</td>
+<td>
+<a href="nostalcomp-files/savia8.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia8_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA - CPU board
+</td>
+</tr>
+<tr align="center" valign="middle"><td colspan="2">&nbsp;</td></tr>
+<tr align="center" valign="middle">
+<td>
+<a href="nostalcomp-files/savia9.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia9_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 - terminal board
+</td>
+<td>
+<a href="nostalcomp-files/savia10.jpg" title="original SAVIA 84"><img src="nostalcomp-files/savia10_th.jpg" width="300" height="200" border="0" alt="SAVIA 84" title="Click to enlarge image"></a>
+<br>SAVIA 84 in action
+</td>
+</tr>
+</tbody></table>
+</p>
+
+<br>
+<p align="center">
+<a href="https://web.archive.org/web/20131126124637/http://nostalcomp.cz/index.php"><b> RET </b></a>
+</p>
+
+<br>
+<hr align="center" width="90%" size="1" color="blue">
+
+<p align="center">
+<table align="center" cellspacing="0" cellpadding="0" border="0" cols="2">  
+<tbody><tr>
+<td width="20"><img src="nostalcomp-files/reklama.gif" width="20" height="60" border="0"></td>
+<td width="468">
+<!-- adexpert.cz (NOSTALCOMP_pat 468x60px) -->
+<div style="width: 468px; height: 60px; overflow: hidden;"><a href="https://web.archive.org/web/20131126124637mp_/http://www.detskemonterky.cz"><img src="nostalcomp-files/detske_baner.gif" width="468" height="60" border="0" alt="Dětské montérky - trvanlivé oděvy pro volný čas" title="Dětské montérky - trvanlivé oděvy pro volný čas"></a></div>
+<!-- adexpert.cz end -->
+</td>
+</tr>
+</tbody></table>
+</p>
+
+<p align="center">
+
+</p>
+
+<center><font color="black" size="-1"><b>
+Optimized for MS IE 8.0 and Firefox with a minimum resolution of 1024 x 768 pixels.<br>
+www.NOSTALCOMP.cz&nbsp;&nbsp;&nbsp;
+2010
+&nbsp;-&nbsp;&nbsp;<script>document.write(new Date().getFullYear());</script>  <br>
+This English-translated archive of the Savia 84 article from <a href="https://www.nostalcomp.cz/index.php">NOSTALCOMP.cz</a> is hosted on <a href="https://alex-j-lowry.github.io/">alex-j-lowry.github.io.</a>
+</b></font></center>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>
