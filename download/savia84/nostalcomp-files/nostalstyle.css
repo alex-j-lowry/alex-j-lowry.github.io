@@ -1,0 +1,78 @@
+body {
+	/*margin:0; padding:0;*/
+	
+	background:url('/nostalcomp-files/bg.gif') repeat-x;
+  background-color: #b1b1b1; /*silver*/
+	
+	text-align: center;
+	color: black;
+	font-family: "arial CE", "helvetica CE", arial, helvetica, sans-serif;
+  font-size: 100%; /* nepouzivat nekulata cisla (95%, 93% apod!) */
+  line-height: 140%;
+	}
+
+#obsah {
+	width: 950px;
+	margin: 0.3em auto;
+	border: 1px solid blue;
+	text-align:left;
+	background: white
+	}
+	
+#obsah1 {
+  margin: 0;
+  padding: 0;
+  border: 0; 
+  background: url('/nostalcomp-files/leftback.png') top left repeat-y;    
+	}
+	
+#levypanel {
+	float: left;
+	width: 150px;
+	margin:0; padding:0;
+		}
+
+#levypanel-obsah {
+	margin: 0 0 0 3; padding: 1px;
+	text-align:center;
+	}
+
+#hlavnipanel {
+	margin:0 0 0 150px; 
+	padding:0;
+	background: white;
+		}
+
+#hlavnipanel-obsah {
+	margin:0; 
+	padding: 5px 1em;
+	}	
+
+.menusez {font-size: 16px; 
+          font-weight:bold; 
+          line-height: 30px;
+          padding:0,0,0,5px;
+         }
+
+.invert  {color: white; 
+          BACKGROUND-COLOR: black;
+         }         
+     
+h4.titulek {font-size: 16px; font-weight:bold;}     
+
+input {color: black; border:0;}
+
+a {color: blue; text-decoration: underline; font-weight:bold;}
+a:hover {text-decoration: none; color: blue; BACKGROUND-COLOR: yellow}
+a.obr     {text-decoration: none; background: transparent; }
+a.obr:hover   {background: transparent;}
+a.menu         {text-decoration: none; background: transparent; color: blue;}
+a.menu:hover   {text-decoration: underline; color: red;}
+
+.tab {border:1px solid green; font:10px Verdana, Arial, Sans-Serif; color:black;}
+.hdr {background:silver; color:black;}
+.det {background:gainsboro; color:black;}
+.graf {margin-top:4px; font-size:0px; height:7px; background-color:slateblue}
+dt.defn {font-weight:bold; color: blue;}
+
+p.bigp    {font-size:120%; font-weight:bold;}
