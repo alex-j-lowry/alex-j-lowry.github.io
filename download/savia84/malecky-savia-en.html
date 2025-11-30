@@ -1,0 +1,393 @@
+<html><head>
+<meta http-equiv="Content-Language" content="cs">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Savia 84</title>
+</head>
+
+<body>
+<div align="center"><center>
+
+<table border="0" width="600">
+    <tbody><tr>
+        <td><h2 align="center">Savia 84</h2>
+		
+        <p>A brief description of the basic software, known as the monitor, was published together with construction instructions in the book <strong>Radioamatérské konstrukce 4 (Amateur Radio Constructions 4)</strong>, published in 1990 by SNTL. First, a brief summary.</p>
+		
+        <p>Readiness to receive the following commands is indicated by display of the inscription <strong>SAVIA 84</strong>.</p>
+		
+        <h3 align="center">Changing Memory Contents</h3>
+		
+        <p>After pressing the <strong>Ad</strong> (M) button, the message <strong>M0000 A1</strong> will appear. Use the hexadecimal number buttons to enter the starting address. Confirm with the <strong>dA</strong> (=) button. The current contents of the selected memory cell will appear in the last two digits of the display. You can change the memory contents in the same way. Press <strong>dA</strong> (=) to move to the next address, press <strong>S</strong> to move to the previous address. An attempt to change the content outside the RAM area is indicated by the <strong>Er</strong> symbol. You can end the entry by pressing another function key (L, Br, Ad, R, Ex)</p>
+		
+        <h3 align="center">Changing the Contents of Registers</h3>
+		
+        <p>After pressing the <strong>R</strong> button, the message <strong>rXXXX AF</strong> will appear, where the symbols XXXX represent the current contents of the register whose name is displayed on the right. The contents of the register can be changed by pressing hexadecimal digits. Confirming with <strong>dA</strong> (=) will move us to the next register in the AF, BC, DE, HL, SP series. You can exit by pressing any other function key.</p>
+		
+        <h3 align="center">Setting Breakpoints</h3>
+		
+        <p>After pressing the <strong>Br</strong> button, the message <strong>b0000 A1</strong> prompts us to enter the address of the first breakpoint. After confirming with the <strong>dA</strong> button, the message <strong>b0000 A2</strong> prompts you to enter the address of the second breakpoint, which you also confirm with the <strong>dA</strong> (=) button. The process automatically continues with the entry of the start address; see the following paragraph.</p>
+		
+        <h3 align="center">Starting the User Program</h3>
+		
+        <p>After pressing the <strong>Ex</strong> button, we are prompted with the message <strong>GXXXX</strong>, where the symbols XXXX represent a random or last used start address, or the address where the program was interrupted by a breakpoint. This can be changed by pressing hexadecimal digits. After pressing the <strong>dA</strong> (=) button, the character <strong>E</strong> will be displayed on the screen and the user program will be started.</p>
+		
+        <p>The following information is probably being published for the first time:</p>
+		
+        <h3 align="center">Breakpoint</h3>
+		
+        <p>When the program is stopped at a breakpoint, <strong>?XXXX BP</strong> is displayed, where XXXX represents the address of the current breakpoint. In this state, the monitor accepts all of the commands listed above.</p>
+		
+        <h3 align="center">Monitor Variables</h3>
+		
+        <div align="center"><center><table border="0" cellpadding="2" cellspacing="1" bgcolor="#000000">
+            <tbody><tr>
+                <td width="60" bgcolor="#C0C0C0">Address</td>
+                <td bgcolor="#C0C0C0">Length</td>
+                <td width="100" bgcolor="#C0C0C0">Name</td>
+                <td bgcolor="#C0C0C0">Description</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FD9h</td>
+                <td bgcolor="#FFFFFF">3</td>
+                <td bgcolor="#FFFFFF">vector5</td>
+                <td bgcolor="#FFFFFF">jump to interrupt handler RST 28H</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FDCh</td>
+                <td bgcolor="#FFFFFF">3</td>
+                <td bgcolor="#FFFFFF">vector6</td>
+                <td bgcolor="#FFFFFF">jump to interrupt handler RST 30H</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FDFh</td>
+                <td bgcolor="#FFFFFF">3</td>
+                <td bgcolor="#FFFFFF">vector7</td>
+                <td bgcolor="#FFFFFF">jump to interrupt handler RST 38H</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FE2h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">break1</td>
+                <td bgcolor="#FFFFFF">address of the first break</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FE4h</td>
+                <td bgcolor="#FFFFFF">1</td>
+                <td bgcolor="#FFFFFF">instr1</td>
+                <td bgcolor="#FFFFFF">overwritten instruction</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FE5h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">break2</td>
+                <td bgcolor="#FFFFFF">address of the second break</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FE7h</td>
+                <td bgcolor="#FFFFFF">1</td>
+                <td bgcolor="#FFFFFF">instr2</td>
+                <td bgcolor="#FFFFFF">overwritten instruction</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FE8h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">PC</td>
+                <td bgcolor="#FFFFFF">contents of program counter</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FEAh</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">AF</td>
+                <td bgcolor="#FFFFFF">contents of register AF</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FECh</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">BC</td>
+                <td bgcolor="#FFFFFF">contents of register BC</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FEEh</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">DE</td>
+                <td bgcolor="#FFFFFF">contents of register DE</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FF0h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">HL</td>
+                <td bgcolor="#FFFFFF">contents of register HL</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FF2h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">SP</td>
+                <td bgcolor="#FFFFFF">contents of stack pointer</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FF4h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">in_addr</td>
+                <td bgcolor="#FFFFFF">address entered</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FF6h</td>
+                <td bgcolor="#FFFFFF">1</td>
+                <td bgcolor="#FFFFFF">in_data</td>
+                <td bgcolor="#FFFFFF">data entered</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">1FF7h</td>
+                <td bgcolor="#FFFFFF">9</td>
+                <td bgcolor="#FFFFFF">buffer</td>
+                <td bgcolor="#FFFFFF">area shown on the screen</td>
+            </tr>
+        </tbody></table>
+        </center></div><h3 align="center">Character Encoding</h3>
+        <div align="center"><center><table border="0" cellpadding="2" cellspacing="1" bgcolor="#000000">
+            <tbody><tr>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Character</td>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Character</td>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Character</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">00h</td>
+                <td bgcolor="#FFFFFF">0</td>
+                <td bgcolor="#FFFFFF">10h</td>
+                <td bgcolor="#FFFFFF">G</td>
+                <td bgcolor="#FFFFFF">20h</td>
+                <td bgcolor="#FFFFFF">"</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">01h</td>
+                <td bgcolor="#FFFFFF">1</td>
+                <td bgcolor="#FFFFFF">11h</td>
+                <td bgcolor="#FFFFFF">H</td>
+                <td bgcolor="#FFFFFF">21h</td>
+                <td bgcolor="#FFFFFF">=</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">02h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">12h</td>
+                <td bgcolor="#FFFFFF">h</td>
+                <td bgcolor="#FFFFFF">22h</td>
+                <td bgcolor="#FFFFFF">?</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">03h</td>
+                <td bgcolor="#FFFFFF">3</td>
+                <td bgcolor="#FFFFFF">13h</td>
+                <td bgcolor="#FFFFFF">i</td>
+                <td bgcolor="#FFFFFF">23h</td>
+                <td bgcolor="#FFFFFF">mezera</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">04h</td>
+                <td bgcolor="#FFFFFF">4</td>
+                <td bgcolor="#FFFFFF">14h</td>
+                <td bgcolor="#FFFFFF">J</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">05h</td>
+                <td bgcolor="#FFFFFF">5</td>
+                <td bgcolor="#FFFFFF">15h</td>
+                <td bgcolor="#FFFFFF">L</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">06h</td>
+                <td bgcolor="#FFFFFF">6</td>
+                <td bgcolor="#FFFFFF">16h</td>
+                <td bgcolor="#FFFFFF">M</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">07h</td>
+                <td bgcolor="#FFFFFF">7</td>
+                <td bgcolor="#FFFFFF">17h</td>
+                <td bgcolor="#FFFFFF">n</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">08h</td>
+                <td bgcolor="#FFFFFF">8</td>
+                <td bgcolor="#FFFFFF">18h</td>
+                <td bgcolor="#FFFFFF">o</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">09h</td>
+                <td bgcolor="#FFFFFF">9</td>
+                <td bgcolor="#FFFFFF">19h</td>
+                <td bgcolor="#FFFFFF">P</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Ah</td>
+                <td bgcolor="#FFFFFF">A</td>
+                <td bgcolor="#FFFFFF">1Ah</td>
+                <td bgcolor="#FFFFFF">r</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Bh</td>
+                <td bgcolor="#FFFFFF">b</td>
+                <td bgcolor="#FFFFFF">1Bh</td>
+                <td bgcolor="#FFFFFF">t</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Ch</td>
+                <td bgcolor="#FFFFFF">C</td>
+                <td bgcolor="#FFFFFF">1Ch</td>
+                <td bgcolor="#FFFFFF">U</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Dh</td>
+                <td bgcolor="#FFFFFF">d</td>
+                <td bgcolor="#FFFFFF">1Dh</td>
+                <td bgcolor="#FFFFFF">u</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Eh</td>
+                <td bgcolor="#FFFFFF">E</td>
+                <td bgcolor="#FFFFFF">1Eh</td>
+                <td bgcolor="#FFFFFF">Y</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">0Fh</td>
+                <td bgcolor="#FFFFFF">F</td>
+                <td bgcolor="#FFFFFF">1Fh</td>
+                <td bgcolor="#FFFFFF">-</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+        </tbody></table>
+        </center></div><h3 align="center">Key Encoding</h3>
+        <div align="center"><center><table border="0" cellpadding="2" cellspacing="1" bgcolor="#000000">
+            <tbody><tr>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Key</td>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Key</td>
+                <td width="50" bgcolor="#C0C0C0">Code</td>
+                <td width="50" bgcolor="#C0C0C0">Key</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">80h</td>
+                <td bgcolor="#FFFFFF">0</td>
+                <td bgcolor="#FFFFFF">88h</td>
+                <td bgcolor="#FFFFFF">8</td>
+                <td bgcolor="#FFFFFF">90h</td>
+                <td bgcolor="#FFFFFF">dA</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">81h</td>
+                <td bgcolor="#FFFFFF">1</td>
+                <td bgcolor="#FFFFFF">89h</td>
+                <td bgcolor="#FFFFFF">9</td>
+                <td bgcolor="#FFFFFF">91h</td>
+                <td bgcolor="#FFFFFF">Ex</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">82h</td>
+                <td bgcolor="#FFFFFF">2</td>
+                <td bgcolor="#FFFFFF">8Ah</td>
+                <td bgcolor="#FFFFFF">A</td>
+                <td bgcolor="#FFFFFF">92h</td>
+                <td bgcolor="#FFFFFF">Ad</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">83h</td>
+                <td bgcolor="#FFFFFF">3</td>
+                <td bgcolor="#FFFFFF">8Bh</td>
+                <td bgcolor="#FFFFFF">B</td>
+                <td bgcolor="#FFFFFF">93h</td>
+                <td bgcolor="#FFFFFF">L</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">84h</td>
+                <td bgcolor="#FFFFFF">4</td>
+                <td bgcolor="#FFFFFF">8Ch</td>
+                <td bgcolor="#FFFFFF">C</td>
+                <td bgcolor="#FFFFFF">94h</td>
+                <td bgcolor="#FFFFFF">S</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">85h</td>
+                <td bgcolor="#FFFFFF">5</td>
+                <td bgcolor="#FFFFFF">8Dh</td>
+                <td bgcolor="#FFFFFF">D</td>
+                <td bgcolor="#FFFFFF">97h</td>
+                <td bgcolor="#FFFFFF">Br</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">86h</td>
+                <td bgcolor="#FFFFFF">6</td>
+                <td bgcolor="#FFFFFF">8Eh</td>
+                <td bgcolor="#FFFFFF">E</td>
+                <td bgcolor="#FFFFFF">9Ah</td>
+                <td bgcolor="#FFFFFF">R</td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF">87h</td>
+                <td bgcolor="#FFFFFF">7</td>
+                <td bgcolor="#FFFFFF">8Fh</td>
+                <td bgcolor="#FFFFFF">F</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+        </tbody></table>
+		
+        </center></div><h3 align="center">Available Subroutines</h3>
+		
+        <p>When writing our own programs, we can also use subroutines from the monitor ROM:</p>
+		
+        <p><strong>014Fh - Address Display:</strong> The contents of the HL register are stored in the variable <strong>in_addr</strong> and the display memory.<font size="3"><sup>1)</sup></font></p>
+		
+        <p><strong>0160h - Data Display:</strong> The contents of register A are stored in the variable <strong>in_data</strong> and the display memory.<sup>1)</sup></p>
+		
+        <p><strong>0179h - Wait:</strong> Only display is performed. The number of display cycles must be entered in register DE.</p>
+		
+        <p><strong>0188h - Clear Display:</strong> The character from register A is placed in the first segment from the left, the remaining segments are filled with spaces (turned off)<sup>1)</sup></p>
+		
+        <p><strong>0196h - Wait for Key Press:</strong> While waiting, the display content is displayed. The code of the pressed key is returned in register A. The Z flag indicates the <strong>dA</strong> (=) key, the CY flag indicates a numeric key.</p>
+		
+        <p><strong>01FDh - Display:</strong> Performs display and keyboard handling. The CY flag indicates a pressed key. To display another memory area (custom text), it is possible to call from address <strong>0200h</strong>. Then the HL register must contain the appropriate text address. For a readable display, it is necessary to call repeatedly.</p>
+		
+        <hr>
+		
+        <p><sup>1)</sup> For custom display, it is necessary to subsequently call subroutine 0196h or 01FDh.</p>
+		
+		<center><p>This English translation of the Savia 84 article from <a href="http://www.malecky.cz/stone1/">Malecky.cz</a> is hosted on <a href="https://alex-j-lowry.github.io/">alex-j-lowry.github.io.</a></p></center>
+		
+        </td>
+    </tr>
+</tbody></table>
+</center></div>
+
+
+
+
+
+</body></html>
