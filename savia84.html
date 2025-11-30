@@ -1,0 +1,217 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
+   <title>Savia 84 - Alex J. Lowry's Electronics Homepage</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="backgnds/abstrct1.gif">
+<a href="index.html"><img SRC="logos/logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%"><h2><i><font face="Arial,Helvetica">Savia 84</font></i></h2>
+<hr WIDTH="100%"><img SRC="logos/pcbway.gif" NOSAVE height=55 width=160 align=RIGHT><i>The PCB fabricator <a href=""><b>PCBWay</b></a> generously provided me with free prototype PCBs for this project! Their PCBs have proven to be very good quality, and are capable of sustaining higher temperatures than the PCB stock used by default by most fabricators. This is especially useful if you're new to soldering! I was also impressed with their selection of customization options; they have a lot more options for solder mask and silkscreen colors compared to many other fabricators.
+<p>
+If you want to build your own Savia 84, the ordering process is easy: Just download the two Gerber files available further down this page and upload them to PCBWay using their <a href="">"Upload Gerber Files"</a> utility. The default settings are suitable for most projects, but you can customize the color of the PCBs if you wish.</i><hr WIDTH="100%">
+<h4>
+<i><font face="Arial,Helvetica">Introduction</font></i></h4>
+<a href="photos/savi4_fs.jpg"><img SRC="photos/savi4_th.jpg" ALT="Savia 84 in operation" NOSAVE height=186 width=320 align=RIGHT></a>
+This small Z80 computer was designed by Czech electronics engineer Jaroslav Tomáš Hyan in 1984. Designed as a simple microprocessor trainer for teaching Z80 assembly programming to students, it makes for an excellent system to start learning assembly on before moving onto more advanced hardware.
+<p>
+Thanks to a built-in RAM battery backup, it's much more convenient to use compared to most CPU trainers; there's no need to worry about losing the programs you've written when the computer is unplugged!
+<p>
+I've developed a handheld version of this computer with a mechanical keypad and more ROM/RAM than the original. The specifications for this version of the Savia 84 are as follows:
+<ul>
+<li>
+2MHz Z80 processor <i>(The internal clock generator can be disabled by a jumper and substituted with an external clock signal)</i></li>
+
+<li>
+4KB of ROM <i>(The monitor program occupies less than 1KB, so the free space can be used however you want)</i></li>
+
+<li>
+24KB of battery-backed RAM <i>(Aside from a small section used by the monitor for storing variables, the data written to the ROM will be preserved regardless of resets and power cycles)</i></li>
+
+<li>
+Intel 8255 I/O controller</li>
+
+<li>
+8-digit, 7-segment LED display</li>
+
+<li>
+8 individual LEDs</li>
+
+<li>
+24-key mechanical keypad<i> (Designed for Cherry MX compatible keyswitches)</i></li>
+
+<li>
+64-pin expansion connector for external modules</li>
+</ul>
+
+<h4>
+<i><font face="Arial,Helvetica">Technical Description</font></i></h4>
+<a href="photos/savi2_fs.jpg"><img SRC="photos/savi2_th.jpg" ALT="Savia 84 in operation" NOSAVE height=320 width=260 align=RIGHT></a>
+The memory map of the Savia 84 is as follows:
+<ul>
+<li>
+<b>$0000-$0FFF:</b> System ROM <i>(4KB)</i></li>
+
+<li>
+<b>$1000-$6FFF:</b> System RAM <i>(24KB)</i></li>
+
+<li>
+<b>$7000-$FFFF:</b> Free space for expansion devices <i>(36KB)</i></li>
+</ul>
+And here's the 8255 I/O map. The 8255 is inactive on I/O operations where address line A2 is high or A3+A4 are low, so there's room for extra I/O devices to be added.
+<ul>
+<li>
+<b>Port $F8 (output, bits 0-6):</b> Segment control <i>(7-segment display)</i></li>
+
+<li>
+<b>Port $F8 (output, bit 7):</b> Free pin of 8255, available on expansion connector</li>
+
+<li>
+<b>Port $F9 (output):</b> Individual LED display</li>
+
+<li>
+<b>Port $FA (output, bits 0-3):</b> 7-segment display/keypad strobe</li>
+
+<li>
+<b>Port $FA (input, bits 4-6):</b> Keypad read</li>
+
+<li>
+<b>Port $FA (input, bit 7):</b> Free pin of 8255, available on expansion connector</li>
+<li>
+<b>Port $FB:</b> 8255 internal control register <i>(Configured by monitor ROM at startup)</i></li>
+</ul>
+Both standard 5V barrel jack and USB-B power supplies can be used to provide power to the unit. The supply voltage should not exceed the standard TTL operating voltage range of 4.75V-5.25V.
+<p>
+The static RAM chip in the Savia 84 is connected to a 3V coin-cell battery (CR2032 or CR2025). When the computer is switched off, this battery provides enough power to the RAM to keep its contents preserved. Two diodes are used to stop the 5V power supply from damaging the battery, and to prevent the battery from trying to power anything other than the RAM.
+<p>
+In practice, I've found that a CR2032 battery will allow the system to retain data for about two weeks.
+<p>
+The 64-pin expansion connector on the side of the unit provides 5V power output, all CPU signals, chip select signals from the address decoder, and two unused I/O pins from the 8255. It should be suitable for adding almost any feature you want to the base system, from an interface for loading/saving programs to a full video interface and alphanumeric keyboard.
+<p>
+The output of the internal 2MHz clock generator is connected to the Z80 through a jumper. By removing this jumper, you can connect an external clock signal to the expansion connector. Keep in mind that NMOS variants of the Z80 aren't guaranteed to run properly at less than around 250kHz; if you want to run the system slower than this, you'll need a CMOS Z80.
+<h4>
+<i>Usage instructions</i></h4>
+<a href="photos/savi1_fs.jpg"><img SRC="photos/savi1_th.jpg" ALT="Savia 84 in operation" NOSAVE height=247 width=320 align=RIGHT></a>
+Upon startup, the message <i>"SAVIA 84"</i> will be displayed on screen. From here, you can select several operating modes:
+<ul>
+<li>
+<b>Data viewer/editor:</b> First, press <b>AD.</b> Enter a memory address with the <b>0</b>-<b>F</b> keys, then press <b>DA</b> to view the data byte at that location. You can change the data at the current location with the <b>0</b>-<b>F</b> keys, or step back and forth through memory with the <b>S</b> <i>(previous address)</i> and <b>DA</b> <i>(next address)</i> keys. The monitor will warn you if you try to write data to a location outside of RAM by displaying <i>"Er"</i> in the data display.</li>
+
+<li>
+<b>CPU register editor:</b> First, press <b>REG.</b> This mode allows you to specify the initial values of the CPU's register pairs before executing a program. You can change the valur of the current register pair with the <b>0</b>-<b>F</b> keys, and cycle through register pairs AF, BC, DE, HL and SP with the <b>DA</b> key.</li>
+
+<li>
+<b>Execute program:</b> First, press <b>EX.</b> Enter an address to start execution at with the <b>0</b>-<b>F</b> keys, then press <b>DA</b> to run your program. When programming, you can put opcode C7 <i>(RST $00)</i> at the end of your program to exit to the monitor.</li>
+
+<li>
+<b>Execute program until breakpoint:</b> </li>
+</ul>
+To exit the data viewer or register editor, you can press one of the function keys (<b>L, BRK, REG, AD, EX</b>) to return to the startup prompt and enter another operating mode.
+<p>
+Unlike more fully-featured computers, the Savia 84 doesn't clear memory upon reset. This means there's no risk of wiping out your program if you accidentally press the reset key!
+<p>
+The monitor was designed with user expansion in mind. During selection of an operating mode, the <b>L</b> and <b>S</b> keys will jump to ROM addresses $0305 and $0285 respectively. By default, these addresses are located in a region of blank space which is intended for the user to add their own loading and saving routine. This could be implemented with a cassette interface connected to the expansion port, or perhaps even an SD card reader.
+<p>
+The monitor has several built-in subroutines that are useful for user-written programs, mainly for handling the display and keypad. There's an excellent guide on Malecky.cz that explains the monitor in much greater detail <a href="http://www.malecky.cz/stone1/savia.htm">here.</a> I've also put together an English translation of the guide <a href="">here.</a>
+<h4>
+<i><font face="Arial,Helvetica">Changelog</font></i></h4>
+<i>Revision 0:</i>
+<br>Initial prototype.
+<ul>
+<li>
+I initially tried replacing the many resistors and transistors that made up the LED display driver circuit with a single 74LS244 <i>(which contains 8 non-inverting line drivers).</i> However, it turns out the discrete LED drivers actually invert the input signal. This meant that not only were the segments inverted, but each display had all its segments switched on during the blanking interval that occurs when the system switches between digits! The result was that it was barely possible to tell which segments were supposed to be "off".</li>
+
+<li>
+The Z80's reset signal must be the inverse of the 8255's reset signal. I found that with the original reset circuit, synchronicity of these signals was not guaranteed; the Z80 would exit its "reset" state before the 8255 and try to configure the 8255's operating mode before it was ready to respond. Thus, the display and keyboard would refuse to work most of the time.</li>
+</ul>
+<i>Revision 1:</i>
+<br>This is the version seen in the photos and available for download on this page. All issues with Revision 0 have been fixed.
+<ul>
+<li>
+The 74LS244 LED driver was replaced with its inverting equivalent, the 74LS240.</li>
+
+<li>
+A previously unused flip-flop on the board was added to the reset circuit to ensure synchronous reset signals.</li>
+</ul>
+
+<h4>
+<i><font face="Arial,Helvetica">Downloads</font></i></h4>
+
+<a href="photos/savi5_fs.jpg"><img SRC="photos/savi5_th.jpg" ALT="Savia 84 system PCBs" NOSAVE height=209 width=320 align=RIGHT></a><a href="download/savia84/savia-84-system-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-system-r1-bom.html">
+Interactive Bill of Materials - System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 386 KB</i>
+
+<p><a href="download/savia84/savia-84-system-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-system-r1-sch.pdf">
+Schematic - System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 587 KB</i>
+
+<p><a href="download/savia84/savia-84-system-r1-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-system-r1-gerbers.zip">
+PCB Gerbers - System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 401 KB</i>
+
+<p><a href="download/savia84/savia-84-system-r1-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-system-r1-kicad.zip">
+KiCad Files - System</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 987 MB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p><a href="download/savia84/savia-84-display-r1-bom.html"><img SRC="icons/bom.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-display-r1-bom.html">
+Interactive Bill of Materials - Display & Keypad</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 360 KB</i>
+
+<p><a href="photos/savi6_fs.jpg"><img SRC="photos/savi6_th.jpg" ALT="Savia 84 display/keyboard PCBs" NOSAVE height=210 width=320 align=RIGHT></a><a href="download/savia84/savia-84-display-r1-sch.pdf"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-display-r1-sch.pdf">
+Schematic - Display & Keypad</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 342 KB</i>
+
+<p><a href="download/savia84/savia-84-display-r1-gerbers.zip"><img SRC="icons/pcb.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-display-r1-gerbers.zip">
+PCB Gerbers - Display & Keypad</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 328 KB</i>
+
+<p><a href="download/savia84/savia-84-display-r1-kicad.zip"><img SRC="icons/kicad.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-display-r1-kicad.zip">
+KiCad Files - Display & Keypad</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 863 KB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p><a href="download/savia84/keypad.png"><img SRC="icons/img.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/keypad.png">
+Keypad Label Sheet</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>PNG image, 281 KB</i> - Keypad labels for printing, intended for use with transparent cover keycaps. Measure how much space is under the keycap covers before printing; there's a DPI guide on the image to aid in getting the labels to print at the right size. Make sure to cut out the labels around the <i>inside</i> of the black outlines.
+
+<p><a href="download/savia84/savia-84-fonts.zip"><img SRC="icons/zip.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-fonts.zip">
+Custom Fonts</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 174 KB</i> - Custom fonts used for the KiCad files. Only needed if you want to modify these files.
+
+<p><a href="download/savia84/original-sch.zip"><img SRC="icons/sch.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/original-sch.zip">
+Original Schematics</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 12.3 MB</i> - Jaroslav's original schematics for the Savia 84. Note that "pin 16" of the 3205 decoder in the 1990 schematic is actually pin 15; VCC should be connected to pin 16.
+
+<p><a href="download/savia84/savia-84-mon.bin"><img SRC="icons/bin.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-mon.bin">
+Monitor ROM</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>BIN data, 1.00 KB</i> - The original 1KB monitor ROM, first published in 1990. Write this to the first 1KB <i>(0000-03FF)</i> of the 4KB ROM area; the rest of the ROM can be used however you like.
+
+<p><a href="download/savia84/savia-84-progs.zip"><img SRC="icons/txt.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-progs.zip">
+Example Programs</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 4.53 KB</i> - Source code for three example programs I've written for the Savia 84. Should be compatible with most assemblers.
+
+<p><a href="download/savia84/savia-84-mikroprocesor-z80-a-jeho-aplikace.zip"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-mikroprocesor-z80-a-jeho-aplikace.zip">
+Mikroprocesor Z80 a jeho aplikace (1984)</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 18.1 MB</i> - Jaroslav's first book mentioning the Savia 84 circuit.
+
+<p><a href="download/savia84/savia-84-jednodeskovy-mikropocitac.zip"><img SRC="icons/pdf.gif" NOSAVE height=24 width=24></a><b><a href="download/savia84/savia-84-jednodeskovy-mikropocitac.zip">
+Jednodeskový mikropočítač (1990)</a></b>
+<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 10.8 KB</i> - The relevant section of Jaroslav's second article about the Savia 84, published in <i>Radioamatérské konstrukce 4</i> (1990). Contains the first known publishing of the monitor code.
+
+<p>
+
+<hr WIDTH="100%">Thanks to:
+
+<br>&nbsp;&nbsp;&nbsp; Jaroslav Tomáš Hyan: The creator of the Savia 84. His initial design with 1KB of RAM was published in 1984, and an updated variant with 2KB of battery-backed CMOS RAM was published in 1990.
+
+<p>&nbsp;&nbsp;&nbsp; <a href="http://www.nostalcomp.cz/">NOSTALCOMP.cz:</a> <a href="http://web.archive.org/web/20131126124637/http://nostalcomp.cz/savia.php">The Savia 84 article on this site</a> is what made me aware of this computer in the first place! Unfortunately, it's currently only available on the Internet Archive. <i>(An English translation of the page is available <a href="download/savia84/nostalcomp-savia-en.html">here.</a>)</i>
+
+<p>&nbsp;&nbsp;&nbsp; <a href="http://www.malecky.cz/stone1/">Malecky.cz:</a> <a href="http://www.malecky.cz/stone1/savia.htm">An excellent explaination of how the Savia 84's monitor works</a> is available on this site. <i>(An English translation is available <a href="download/savia84/malecky-savia-en.html">here.</a>)</i> Make sure to check out the "Stone 1" on this site, a Z80 computer based on the Savia 84 and Tesla PMI-80.
+
+<p>
+
+Last updated on Nov 30, 2025.
+<br>This page was first uploaded on Nov 30, 2025.
+</body>
+</html>
