@@ -48,8 +48,8 @@ Address space of 32KB for ROM cartridges <i>(ROMs larger than 32KB should be pos
 <li>
 1 controller <i>(4 direction buttons, 2 fire buttons)</i></li>
 </ul>
-As of the time of writing, 26 game programs have been developed for the
-Z80 TV Game: 6 games by <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Mr. Isizu</a> <i>(the designer of the Z80 TV Game),</i> and <a href="http://inufuto.web.fc2.com/8bit/">20 games</a> by <a href="https://github.com/inufuto">Inufuto,</a> who has developed a <a href="https://github.com/inufuto/Cate">multi-platform compiler</a> that supports the Z80 TV Game.
+As of the time of writing, 31 game programs have been developed for the
+Z80 TV Game: 6 games by <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Mr. Isizu</a> <i>(the designer of the Z80 TV Game),</i> <a href="http://inufuto.web.fc2.com/8bit/">21 games</a> by <a href="https://github.com/inufuto">Inufuto,</a> who has developed a <a href="https://github.com/inufuto/Cate">multi-platform compiler</a> that supports the Z80 TV Game, and 4 games by <a href="https://sourceforge.net/u/robertk-retro/profile/">RobertK,</a> which demonstrate how Z88DK can be used to write games for the Z80 TV Game.
 
 <h4>
 <i><font face="Arial,Helvetica">Technical Description</font></i></h4>
@@ -59,6 +59,10 @@ Z80 TV Game: 6 games by <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.h
 <p>
 
 Controller input and audio output are handled by either an Intel 8255 or Zilog Z80PIO I/O controller. There are two sockets on the PCB for either controller, depending on which is easier for you to obtain. These two ICs have to be controlled slightly differently by software, but it's possible to write games that are compatible with both, as demonstrated by the games written by Inufuto.
+
+<p>
+
+<a href="z80tvgio.html">You can view source code for a startup routine that will determine whether the system is equipped with an Intel 8255 or Z80PIO I/O controller and set the controller's internal registers accordingly here.</a>
 
 <p>
 
@@ -349,15 +353,17 @@ Z80 TV Game Logo (1920 x 846) (Variant 2)</a></b>
 <br>&nbsp;&nbsp;&nbsp; <a href="http://w01.tp1.jp/~a571632211/index.html">Mr. Isizu:</a> The original designer of the <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Z80 TV Game.</a>
 
 <p>&nbsp;&nbsp;&nbsp; <a href="https://github.com/inufuto">Inufuto:</a> Developer of <a href="https://github.com/inufuto/Cate">Cate,</a> a multi-platform compiler
-that can generate software for the Z80 TV Game. <a href="http://inufuto.web.fc2.com/8bit/">All 20 of the games he has created with it thus far</a> have Z80 TV Game versions. Inufuto has also designed a <a href="https://github.com/inufuto/Z80TVGA">PCB version of the Z80 TV Game</a> that outputs VGA video via a Raspberry Pi Pico.
+that can generate software for the Z80 TV Game. <a href="http://inufuto.web.fc2.com/8bit/">All 21 of the games he has created with it thus far</a> have Z80 TV Game versions. Inufuto has also designed a <a href="https://github.com/inufuto/Z80TVGA">PCB version of the Z80 TV Game</a> that outputs VGA video via a Raspberry Pi Pico.
 
 <p>&nbsp;&nbsp;&nbsp; <a href="http://takeda-toshiya.my.coocan.jp/">Takeda Toshiya:</a> Developer of <a href="http://takeda-toshiya.my.coocan.jp/z80tvgame/index.html">eZ80TVGAME,</a> a Z80 TV Game emulator for Windows.
 
 <p>&nbsp;&nbsp;&nbsp; lsluk: Developer of <a href="http://vdmgr.g2.xrea.com/system_z80tvgame.html">vdmgr,</a> a multi-platform emulator for Windows that supports the Z80 TV Game.
 
+<p>&nbsp;&nbsp;&nbsp; RobertK: Developer of <a href="https://sourceforge.net/u/robertk-retro/profile/">several games</a> for the Z80 TV Game.
+
 <p>
 
-Last updated on Mar 9, 2026.
+Last updated on Mar 23, 2026.
 <br>This page was first uploaded on Oct 26, 2025.
 <br><script type="text/javascript" src="https://counter.websiteout.com/js/2/0/0/1"></script> visitors since Dec 26, 2025.
 </body>

@@ -1,0 +1,214 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
+   <title>Z80 TV Game Startup Routine - Alex J. Lowry's Electronics Homepage</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="backgnds/grid1.gif">
+<a href="index.html"><img SRC="logos/logo1.gif" height=107 width=640></a>
+<hr WIDTH="100%">
+
+<h2><i><font face="Arial,Helvetica">Z80 TV Game - Assembly Startup Routine</font></i></h2>
+
+This startup routine can be used as a starting point for your Z80 TV Game programs. It does three things:
+<ul>
+<li>
+Disables maskable (/INT) interrupts. This step is not entirely necessary for the system to work, but it may help your software avoid conflicts with future hardware.</li>
+
+<li>
+Clears the system and video RAM to all zeros.</li>
+
+<li>
+Determines whether the system is equipped with an Intel 8255 or Z80PIO I/O controller, and sets the controller's internal registers accordingly.</li>
+</ul>
+You can copy and paste this code into a text editor, or download a more complete set of routines I've written for the Z80 TV Game <a href="download/z80tvg/roms.zip">here.</a>
+
+<p>
+
+<font face="Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace">
+
+<i>&nbsp;;&nbsp;Z80&nbsp;TV&nbsp;Game&nbsp;startup&nbsp;routine&nbsp;-&nbsp;21.03.2026,&nbsp;Alex&nbsp;J.&nbsp;Lowry</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;Based&nbsp;on&nbsp;the&nbsp;Z80&nbsp;TV&nbsp;Game&nbsp;startup&nbsp;routine&nbsp;developed&nbsp;by&nbsp;Inufuto&nbsp;for&nbsp;the&nbsp;Cate</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;compiler.</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;<a href="https://github.com/inufuto/Cate_examples/blob/main/z80tvg/aerial/Startup.asm">https://github.com/inufuto/Cate_examples/blob/main/z80tvg/aerial/Startup.asm</a></i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;This&nbsp;startup&nbsp;routine&nbsp;will&nbsp;automatically&nbsp;determine&nbsp;whether&nbsp;the&nbsp;system&nbsp;has&nbsp;an</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;8255&nbsp;or&nbsp;Z80PIO&nbsp;installed,&nbsp;and&nbsp;configure&nbsp;the&nbsp;correct&nbsp;operating&nbsp;mode&nbsp;for</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;either&nbsp;chip.&nbsp;This&nbsp;procedure&nbsp;does&nbsp;not&nbsp;cause&nbsp;any&nbsp;adverse&nbsp;effects&nbsp;on&nbsp;the&nbsp;Z80</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;TV&nbsp;Game&nbsp;2,&nbsp;and&nbsp;is&nbsp;100%&nbsp;cross-compatible&nbsp;with&nbsp;all&nbsp;known&nbsp;Z80&nbsp;TV&nbsp;Game</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;variants&nbsp;that&nbsp;currently&nbsp;exist.</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;This&nbsp;source&nbsp;code&nbsp;was&nbsp;written&nbsp;for&nbsp;the&nbsp;AZ80&nbsp;assembler&nbsp;for&nbsp;Windows&nbsp;and&nbsp;DOS,</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;and&nbsp;may&nbsp;need&nbsp;some&nbsp;modification&nbsp;to&nbsp;work&nbsp;with&nbsp;other&nbsp;assemblers.&nbsp;For</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;example,&nbsp;many&nbsp;Z80&nbsp;assemblers&nbsp;expect&nbsp;a&nbsp;colon&nbsp;after&nbsp;each&nbsp;address&nbsp;label</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;declaration.</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;You&nbsp;can&nbsp;download&nbsp;the&nbsp;AZ80&nbsp;assembler&nbsp;here:</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;<a href="https://www.retrotechnology.com/restore/az80.html">https://www.retrotechnology.com/restore/az80.html</a></i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;Video&nbsp;memory&nbsp;locations:</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;Byte&nbsp;in&nbsp;upper&nbsp;left&nbsp;corner:&nbsp;&nbsp;$C1E4</i><br>
+<i>&nbsp;;&nbsp;Byte&nbsp;in&nbsp;upper&nbsp;right&nbsp;corner:&nbsp;$C1F8&nbsp;&nbsp;...&nbsp;&nbsp;Upper&nbsp;left&nbsp;+&nbsp;$14</i><br>
+<i>&nbsp;;&nbsp;Byte&nbsp;in&nbsp;lower&nbsp;left&nbsp;corner:&nbsp;&nbsp;$DA62&nbsp;&nbsp;...&nbsp;&nbsp;Upper&nbsp;left&nbsp;+&nbsp;($1E&nbsp;*&nbsp;$D1)</i><br>
+<i>&nbsp;;&nbsp;Byte&nbsp;in&nbsp;lower&nbsp;right&nbsp;corner:&nbsp;$DA76&nbsp;&nbsp;...&nbsp;&nbsp;Upper&nbsp;left&nbsp;+&nbsp;$14&nbsp;+&nbsp;($1E&nbsp;*&nbsp;$D1)</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;visible&nbsp;byte&nbsp;columns:&nbsp;Hex&nbsp;15&nbsp;/&nbsp;Dec&nbsp;21</i><br>
+<i>&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;visible&nbsp;scanlines:&nbsp;Hex&nbsp;D2&nbsp;/&nbsp;Dec&nbsp;210</i><br>
+<i>&nbsp;;</i><br>
+<i>&nbsp;;&nbsp;Number&nbsp;of&nbsp;visible&nbsp;pixel&nbsp;(bit)&nbsp;columns:&nbsp;Hex&nbsp;A8&nbsp;/&nbsp;Dec&nbsp;168</i><br>
+<i>&nbsp;;</i><br>
+<br>
+SysRAMStart&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$8000&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Start&nbsp;of&nbsp;system&nbsp;RAM.</i><br>
+SysRAMEnd&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$bfff&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;End&nbsp;of&nbsp;system&nbsp;RAM.</i><br>
+<br>
+VRAMStart&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$c000&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Start&nbsp;of&nbsp;video&nbsp;RAM.</i><br>
+VRAMEnd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$dfff&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;End&nbsp;of&nbsp;video&nbsp;RAM.</i><br>
+<br>
+ScrStart&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$c1e4&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;First&nbsp;visible&nbsp;byte.&nbsp;This&nbsp;value&nbsp;can&nbsp;be</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;readjusted&nbsp;to&nbsp;match&nbsp;TV&nbsp;offset&nbsp;as</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;required.&nbsp;The&nbsp;value</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;$c1e4&nbsp;-&nbsp;($1e&nbsp;*&nbsp;$10)&nbsp;will&nbsp;position&nbsp;the</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;image&nbsp;at&nbsp;the&nbsp;highest&nbsp;possible&nbsp;point&nbsp;in</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;video&nbsp;memory.</i><br>
+<br>
+ScrLine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$001e&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Length&nbsp;of&nbsp;one&nbsp;scanline.</i><br>
+<br>
+JoyPort1&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Location&nbsp;of&nbsp;input&nbsp;port&nbsp;for&nbsp;player&nbsp;1</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;controller.</i><br>
+JoyPort2&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Location&nbsp;of&nbsp;input&nbsp;port&nbsp;for&nbsp;player&nbsp;2</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;controller.&nbsp;(Only&nbsp;on&nbsp;Z80&nbsp;TV&nbsp;Game&nbsp;2)</i><br>
+<br>
+AudioPort&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>equ</b></font>&nbsp;$02&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Location&nbsp;of&nbsp;audio&nbsp;output&nbsp;port.</i><br>
+<br>
+&nbsp;&nbsp;<font color="#007F7F"><b>di</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Disable&nbsp;interrupts.</i><br>
+<br>
+StartClearMem<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;&nbsp;$00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Load&nbsp;blank&nbsp;byte&nbsp;into&nbsp;A.</i><br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;de,&nbsp;SysRAMStart<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;bc,&nbsp;VRAMEnd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Initialize&nbsp;address&nbsp;pointers&nbsp;for&nbsp;clearing&nbsp;system&nbsp;and</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;video&nbsp;RAM.</i><br>
+<br>
+StartClearMem1<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;(de),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Load&nbsp;current&nbsp;address&nbsp;with&nbsp;value&nbsp;of&nbsp;A.</i><br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;c<br>
+&nbsp;&nbsp;<font color="#007F7F"><b>cp</b></font>&nbsp;e&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Compare&nbsp;low&nbsp;byte&nbsp;of&nbsp;BC&nbsp;and&nbsp;DE.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;nz,&nbsp;StartClearMem2&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;equal,&nbsp;keep&nbsp;running&nbsp;the&nbsp;loop.&nbsp;Otherwise...</i><br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;</i><br>
+&nbsp;&nbsp;<font color="#007F7F"><b>cp</b></font>&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Compare&nbsp;high&nbsp;byte&nbsp;of&nbsp;BC/DE.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;z,&nbsp;StartClearMemEnd&nbsp;<i>;&nbsp;&nbsp;&nbsp;If&nbsp;equal,&nbsp;end&nbsp;loop.</i><br>
+<br>
+StartClearMem2<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Reset&nbsp;A&nbsp;with&nbsp;blank&nbsp;byte.</i><br>
+&nbsp;&nbsp;<font color="#007F7F"><b>inc</b></font>&nbsp;de&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Continue&nbsp;to&nbsp;next&nbsp;screen&nbsp;address.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;StartClearMem1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Loop&nbsp;back.</i><br>
+<br>
+StartClearMemEnd<br>
+<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;sp,&nbsp;SysRAMEnd&nbsp;+&nbsp;1&nbsp;&nbsp;&nbsp;<i>;&nbsp;Initialize&nbsp;stack&nbsp;pointer.</i><br>
+<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Does&nbsp;this&nbsp;system&nbsp;have&nbsp;an&nbsp;8255&nbsp;or&nbsp;a&nbsp;Z80&nbsp;PIO?</i><br>
+&nbsp;&nbsp;<font color="#7F00FF"><b>out</b></font>&nbsp;($03),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;$90&nbsp;to&nbsp;Port&nbsp;$03&nbsp;-&nbsp;8255&nbsp;control&nbsp;register&nbsp;and&nbsp;PIO&nbsp;port.</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;$02&nbsp;control&nbsp;register.</i><br>
+<br>
+<i>&nbsp;&nbsp;;&nbsp;If&nbsp;this&nbsp;is&nbsp;an&nbsp;8255-based&nbsp;system,&nbsp;the&nbsp;control&nbsp;register&nbsp;has&nbsp;now&nbsp;been&nbsp;properly</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;set.</i><br>
+<i>&nbsp;&nbsp;;</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;Mode&nbsp;Set&nbsp;Flag&nbsp;Active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;7)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;\__&nbsp;Group&nbsp;A&nbsp;Mode&nbsp;=&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;6)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;5)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;Port&nbsp;A&nbsp;=&nbsp;Input&nbsp;($00)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;4)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;Port&nbsp;C&nbsp;(Upper)&nbsp;=&nbsp;Output&nbsp;($02)&nbsp;(Bit&nbsp;3)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;Group&nbsp;B&nbsp;Mode&nbsp;=&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;2)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;Port&nbsp;B&nbsp;=&nbsp;Output&nbsp;($01)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Bit&nbsp;1)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;Port&nbsp;C&nbsp;(Lower)&nbsp;=&nbsp;Output&nbsp;($02)&nbsp;(Bit&nbsp;0)</i><br>
+<br>
+&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$aa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;$AA&nbsp;to&nbsp;Port&nbsp;$01&nbsp;-&nbsp;8255&nbsp;unused&nbsp;output&nbsp;port&nbsp;and&nbsp;PIO</i><br>
+&nbsp;&nbsp;<font color="#7F00FF"><b>out</b></font>&nbsp;($01),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;port&nbsp;$00&nbsp;ctrl.&nbsp;register.</i><br>
+<br>
+&nbsp;&nbsp;<font color="#7F00FF"><b>in</b></font>&nbsp;a,&nbsp;($01)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Query&nbsp;for&nbsp;input&nbsp;from&nbsp;$01.</i><br>
+&nbsp;&nbsp;<font color="#007F7F"><b>cp</b></font>&nbsp;$aa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;An&nbsp;8255&nbsp;will&nbsp;return&nbsp;the&nbsp;value&nbsp;in&nbsp;its&nbsp;port&nbsp;$01</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;register,&nbsp;while&nbsp;a&nbsp;Z80PIO&nbsp;will&nbsp;return&nbsp;some&nbsp;other</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;value.&nbsp;Unfortunately&nbsp;there&nbsp;isn't&nbsp;much</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;documentation&nbsp;on&nbsp;this&nbsp;particular&nbsp;functionality&nbsp;of</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;the&nbsp;Z80PIO,&nbsp;so&nbsp;I&nbsp;don't&nbsp;know&nbsp;exactly&nbsp;what&nbsp;value&nbsp;it</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;returns.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;z,&nbsp;Test8255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;If&nbsp;the&nbsp;returned&nbsp;value&nbsp;is&nbsp;not&nbsp;$AA,&nbsp;continue&nbsp;to&nbsp;the</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;Z80PIO&nbsp;initialization&nbsp;routine.&nbsp;Otherwise,&nbsp;jump</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;forward&nbsp;to&nbsp;a&nbsp;second&nbsp;test&nbsp;to&nbsp;make&nbsp;sure&nbsp;this&nbsp;is&nbsp;an</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;8255-based&nbsp;system.</i><br>
+<br>
+StartupPIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Initialize&nbsp;Z80PIO.&nbsp;This&nbsp;code&nbsp;will&nbsp;only&nbsp;be&nbsp;run&nbsp;if&nbsp;the</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;system&nbsp;is&nbsp;a&nbsp;Z80PIO-based&nbsp;Z80TVG&nbsp;or&nbsp;a&nbsp;Z80TVG2.</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$4f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F00FF"><b>out</b></font>&nbsp;($01),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;$4F&nbsp;to&nbsp;Port&nbsp;$01&nbsp;-&nbsp;PIO&nbsp;control&nbsp;port&nbsp;for&nbsp;port&nbsp;$00.</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$0f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F00FF"><b>out</b></font>&nbsp;($03),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;$0F&nbsp;to&nbsp;Port&nbsp;$03&nbsp;-&nbsp;PIO&nbsp;control&nbsp;port&nbsp;for&nbsp;port&nbsp;$00.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;EndStartup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Jump&nbsp;to&nbsp;the&nbsp;end&nbsp;of&nbsp;this&nbsp;startup&nbsp;routine.</i><br>
+<br>
+<i>&nbsp;&nbsp;;&nbsp;If&nbsp;this&nbsp;is&nbsp;an&nbsp;PIO-based&nbsp;system,&nbsp;the&nbsp;control&nbsp;register&nbsp;has&nbsp;now&nbsp;been&nbsp;properly</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;set.</i><br>
+<i>&nbsp;&nbsp;;</i><br>
+<i>&nbsp;&nbsp;;&nbsp;Port&nbsp;$01&nbsp;(control&nbsp;register&nbsp;for&nbsp;port&nbsp;$00):</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;\__&nbsp;Input&nbsp;Mode</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;/</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;(unused)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;(unused)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;\</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;&nbsp;\__&nbsp;Signifies&nbsp;that&nbsp;the&nbsp;operating</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;mode&nbsp;is&nbsp;being&nbsp;set</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;/</i><br>
+<i>&nbsp;&nbsp;;</i><br>
+<i>&nbsp;&nbsp;;&nbsp;Port&nbsp;$03&nbsp;(control&nbsp;register&nbsp;for&nbsp;port&nbsp;$02):</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;\__&nbsp;Output&nbsp;Mode</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;/</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;(unused)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;0&nbsp;-&nbsp;(unused)</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;\</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;&nbsp;\__&nbsp;Signifies&nbsp;that&nbsp;the&nbsp;operating</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;mode&nbsp;is&nbsp;being&nbsp;set</i><br>
+<i>&nbsp;&nbsp;;&nbsp;&nbsp;1&nbsp;-&nbsp;/</i><br>
+<br>
+Test8255<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00BF00"><b>ld</b></font>&nbsp;a,&nbsp;$55&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Send&nbsp;some&nbsp;data&nbsp;to&nbsp;Port&nbsp;$01.</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F00FF"><b>out</b></font>&nbsp;($01),&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F00FF"><b>in</b></font>&nbsp;a,&nbsp;($01)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;Try&nbsp;receiving&nbsp;data&nbsp;from&nbsp;the&nbsp;same&nbsp;port.</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#007F7F"><b>cp</b></font>&nbsp;$55&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;An&nbsp;8255&nbsp;will&nbsp;return&nbsp;the&nbsp;value&nbsp;in&nbsp;its&nbsp;port&nbsp;$01</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;register,&nbsp;while&nbsp;a&nbsp;Z80PIO&nbsp;will&nbsp;return&nbsp;some&nbsp;other</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;value.&nbsp;Unfortunately&nbsp;there&nbsp;isn't&nbsp;much</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;documentation&nbsp;on&nbsp;this&nbsp;particular&nbsp;functionality&nbsp;of</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;the&nbsp;Z80PIO,&nbsp;so&nbsp;I&nbsp;don't&nbsp;know&nbsp;exactly&nbsp;what&nbsp;value&nbsp;it</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;returns.</i><br>
+&nbsp;&nbsp;<font color="#007FFF"><b>jr</b></font>&nbsp;nz,&nbsp;StartupPIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;If&nbsp;the&nbsp;returned&nbsp;value&nbsp;is&nbsp;not&nbsp;$55,&nbsp;jump&nbsp;to&nbsp;the&nbsp;Z80PIO</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;initialization&nbsp;routine.&nbsp;Otherwise,&nbsp;continue</i><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>;&nbsp;&nbsp;&nbsp;onward.</i><br>
+<br>
+EndStartup<br>
+</font>
+<p>
+
+<hr WIDTH="100%">Thanks to:
+
+<br>&nbsp;&nbsp;&nbsp; <a href="http://w01.tp1.jp/~a571632211/index.html">Mr. Isizu:</a> The original designer of the <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Z80 TV Game.</a>
+
+<p>&nbsp;&nbsp;&nbsp; <a href="https://github.com/inufuto">Inufuto:</a> Developer of <a href="https://github.com/inufuto/Cate">Cate,</a> a multi-platform compiler
+that can generate software for the Z80 TV Game. <a href="http://inufuto.web.fc2.com/8bit/">All 21 of the games he has created with it thus far</a> have Z80 TV Game versions. Inufuto has also designed a <a href="https://github.com/inufuto/Z80TVGA">PCB version of the Z80 TV Game</a> that outputs VGA video via a Raspberry Pi Pico.
+
+<p>&nbsp;&nbsp;&nbsp; <a href="http://takeda-toshiya.my.coocan.jp/">Takeda Toshiya:</a> Developer of <a href="http://takeda-toshiya.my.coocan.jp/z80tvgame/index.html">eZ80TVGAME,</a> a Z80 TV Game emulator for Windows.
+
+<p>&nbsp;&nbsp;&nbsp; lsluk: Developer of <a href="http://vdmgr.g2.xrea.com/system_z80tvgame.html">vdmgr,</a> a multi-platform emulator for Windows that supports the Z80 TV Game.
+
+<p>&nbsp;&nbsp;&nbsp; RobertK: Developer of <a href="https://sourceforge.net/u/robertk-retro/profile/">several games</a> for the Z80 TV Game.
+
+<p>
+
+Last updated on Mar 23, 2026.
+<br>This page was first uploaded on Mar 23, 2026.
+<br><script type="text/javascript" src="https://counter.websiteout.com/js/2/0/0/1"></script> visitors since Dec 26, 2025.
+</body>
+</html>
+
