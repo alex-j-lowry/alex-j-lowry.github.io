@@ -1,0 +1,277 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
+    <title>Z80 TV Game 2 - Alex J. Lowry's Electronics Homepage</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body text="#000000" link="#0000FF" vlink="#800080" background="backgnds/grid1.gif">
+    <a href="index.html"><img SRC="logos/logo1.gif" height=107 width=640></a>
+    <hr WIDTH="100%"><img SRC="logos/z80tvg.gif" ALT="Z80 TV Game logo" height=282 width=640>
+
+<h2><i><font face="Arial,Helvetica">Z80 TV Game 2</font></i></h2>
+
+<hr WIDTH="100%"><img SRC="logos/pcbway.gif" height=55 width=160 align=RIGHT>
+
+    <i>The PCB fabricator <a href="https://www.pcbway.com/"><b>PCBWay</b></a> generously provided me with free prototype PCBs and 3D printed cartridge enclosures for this project!
+    <p>
+    Their PCBs have proven to be very good quality, and are capable of sustaining higher temperatures than the PCB stock used by default by most fabricators. This is especially useful if you're new to soldering! I was also impressed with their selection of customization options; they have a lot more options for solder mask and silkscreen colors compared to many other fabricators.
+    <p>
+    If you want to build your own Z80 TV Game 2, the ordering process is easy: Just download the Gerber files available further down this page and upload them to PCBWay using their <a href="https://www.pcbway.com/QuickOrderOnline.aspx">"Upload Gerber Files"</a> utility. The default settings are suitable for most projects, but you can customize the color of the PCBs if you wish.</i>
+
+<hr WIDTH="100%"><h4><i><font face="Arial,Helvetica">Introduction</font></i></h4>
+
+    <a href="photos/ztg2-11f.jpg"><img SRC="photos/ztg2-11t.jpg" ALT="Z80 TV Game in operation" height=205 width=320 align=RIGHT></a>
+
+    This updated version of <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Mr. Isizu's original homemade 8-bit console from 1987</a> adds a second controller port, allowing multiplayer games to be written for the system! It retains full backwards compatibility with the original Z80 TV Game, and multiplayer games for the Z80 TV Game 2 will be playable on the original Z80 TV Game if they have a single player mode.
+    <p>
+    The Z80 TV Game is an intriguing console, combining video hardware reminiscent of 1970's consoles like the RCA Studio II with more memory than later 8-bit systems such as the NES, Game Boy and Atari 7800.
+    <p>
+    It can be built with a minimal number of components, and the only out-of-production part in the entire Z80 TV Game 2 is the Z80 CPU itself.
+    <p>
+    The system's specifications are as follows:
+    <ul>
+        <li>4MHz Z80 processor <i>(The timing of the video circuit is derived from a source separate to the computer, so running the CPU at a higher clockspeed would be fairly simple.)</i></li>
+        <li>Address space of 32KB for ROM cartridges <i>(ROMs larger than 32KB would be possible with bank switching.)</i></li>
+        <li>16KB of system RAM</li>
+        <li>8KB of video RAM</li>
+        <li>168x210 pixel black/white graphics</li>
+        <li>60Hz composite video output</li>
+        <li>1-bit audio output</li>
+        <li>Up to 2 controllers <i>(each with 4 direction buttons and 2 fire buttons)</i></li>
+    </ul>
+    As of the time of writing, 31 game programs have been developed for the original Z80 TV Game: 6 games by <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Mr. Isizu</a> <i>(the designer of the Z80TVG),</i> <a href="http://inufuto.web.fc2.com/8bit/">21 games</a> by <a href="https://github.com/inufuto">Inufuto,</a> who has developed a <a href="https://github.com/inufuto/Cate">multi-platform compiler</a> that supports the Z80TVG, and 4 games by <a href="https://sourceforge.net/u/robertk-retro/profile/">RobertK,</a> which demonstrate how Z88DK can be used to write games for the Z80TVG. <b>Since the Z80 TV Game 2 is 100% backwards compatible with the original Z80 TV Game, it's able to run the full library of existing software.</b>
+
+<h4><i><font face="Arial,Helvetica">Technical Description</font></i></h4>
+
+    <a href="photos/ztg2-1f.jpg"><img SRC="photos/ztg2-1t.jpg" ALT="Close-up of assembled system" height=226 width=320 align=RIGHT></a>
+
+    The circuitry of the Z80 TV Game is relatively easy to understand, making it a good resource for learning how a computer generates a video signal.
+    <p>
+    The I/O circuitry of the original Z80 TV Game has been replaced by a cheaper 74LS-based solution. Not only does this lower the cost of components, it also frees up an I/O port for a second controller!
+    <p>
+    The controller interface is designed for two-button Sega Master System controllers and will also work with Mega Drive/Genesis controllers. Standard one-button joysticks will also work, aside from the lack of a second button.
+    <p>
+    The composite sync signal is generated with an EPROM, an unconventional method of simplifying the circuitry. Different ROMs have different data access times, so you may need to experiment with one or two models of ROM before you'll find one that produces a glitchless video signal, due to the high speed at which the raster generator steps through the ROM's address bus.
+    <p>
+    Fortunately, any size of ROM between 4KB (2732) and 64KB (27512) can be used, so long as the 4KB binary data file <i>(available for download further down this page)</i> is written to the upper 4KB of higher capacity ROMs. During testing, I found that a 150ns ROM worked well, while a 450ns ROM was too slow.
+    <p>
+    If the prospect of making a lot of cartridges doesn't appeal to you, I've designed a multi-cartridge that holds sixteen 32KB games on one 27C040 ROM. Game selection on the multi-cartridge is performed with DIP switches.
+    <p>
+    The maximum file size for games is 32KB, but I've designed an experimental bank-switching cartridge PCB <i>(not tested yet!)</i> that should allow games of up to 256KB to be accessed through two configurable 16KB page registers on the cartridge.
+
+<h4><i>Software Development</i></h4>
+
+    <a href="photos/ztg2-12f.jpg"><img SRC="photos/ztg2-12t.jpg" ALT="Close-up of cartridge shells with PCB" height=228 width=320 align=RIGHT></a>
+
+    The memory map of the Z80 TV Game and Z80 TV Game 2 is as follows:
+    <ul>
+        <li><b>$0000-$7FFF:</b> Cartridge ROM <i>(32KB)</i></li>
+        <li><b>$8000-$BFFF:</b> System RAM <i>(16KB)</i></li>
+        <li><b>$C000-$DFFF:</b> Video RAM <i>(8KB)</i></li>
+        <li><b>$E000-$FFFF:</b> Not used</li>
+    </ul>
+    I/O on the Z80 TV Game 2 is as follows:
+    <ul>
+        <li><b>Port $00:</b> Controller 1 input <i>(bits 0-5, active low)</i></li>
+        <li><b>Port $01:</b> Controller 2 input <i>(bits 0-5, active low)</i></li>
+        <li><b>Port $02:</b> Audio output <i>(bit 0)</i></li>
+    </ul>
+    The Z80 TV Game 2's I/O circuitry is easier to program for, as it doesn't need control codes loaded into it upon a system reset. However, <b>I encourage developers who want to write software for this system to include I/O initialization code in their programs in order to ensure backwards compatibility with the original Z80 TV Game.</b> <a href="z80tvgio.html">You can view a system startup routine that can be placed at the beginning of your assembly programs here.</a>
+    <p>
+    <a href="photos/ztg2-13f.jpg"><img SRC="photos/ztg2-13t.jpg" ALT="Close-up of cartridge shells" height=192 width=320 align=RIGHT></a>
+
+    As mentioned earlier, 6 games <i>(also a larger ROM containing all 6 games and a selection menu)</i> have been developed by the creator of the Z80 TV Game, <a href="http://w01.tp1.jp/~a571632211/index.html">Mr. Isizu.</a> These games were written in Z80 assembly, and the source code listings <i>(with code comments in Japanese)</i> are available for download <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">here.</a>
+    <p>
+    There's a selection of tools available for programming the Z80 TV Game in C:
+
+    <ul>
+        <li>The <a href="https://github.com/z88dk/z88dk">Z88DK development kit</a> supports the Z80 TV Game.</li>
+
+        <li><a href="https://github.com/inufuto/Cate">Cate</a> is a C-like programming language and multi-platform compiler developed by <a href="https://github.com/inufuto">Inufuto</a> that can compile code for hundreds of retro systems. Inufuto has ported <a href="http://inufuto.web.fc2.com/8bit/">21 games</a> written with it to the Z80 TV Game.</li>
+
+        <li><a href="https://github.com/Fabrizio-Caruso/CROSS-LIB">Cross-Lib</a> is a multi-platform C programming framework with support for hundreds of retro systems, including the Z80 TV Game.</li>
+    </ul>
+<h4><i><font face="Arial,Helvetica">Enclosures</font></i></h4>
+
+    To protect the console PCB, I've drawn some dimension sheets for acrylic covers that can be sent to an acrylic cutting company for fabrication. These acrylic covers make it easier to push down on the console when removing the cartridge. I recommend having them manufactured with a thickness of around 2mm to 3mm.
+    <p>
+    I've also designed enclosures for the Z80 TV Game's cartridges that can be 3D printed and assembled with M3 x 8 self-tapping screws. I sent the production files to PCBWay for production, and I was very happy with the results! They offer a wide range of filament colors, so you have a lot of options for what your cartridges look like.
+
+<h4><i><font face="Arial,Helvetica">Downloads</font></i></h4>
+
+    <a href="photos/ztg2-14f.jpg"><img SRC="photos/ztg2-14t.jpg" ALT="Z80 TV Game in operation" height=209 width=320 align=RIGHT></a>
+
+    <a href="download/z80tvg2/z80tvg2-r1-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/z80tvg2-r1-bom.html">
+    Interactive Bill of Materials - Console</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 522 KB</i>
+
+<p> <a href="download/z80tvg2/z80tvg2-r1-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/z80tvg2-r1-sch.pdf">
+    Schematic - Console</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 951 KB</i>
+
+<p> <a href="download/z80tvg2/z80tvg2-r1-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/z80tvg2-r1-gerbers.zip">
+    PCB Gerbers - Console</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 739 KB</i>
+
+<p> <a href="download/z80tvg2/z80tvg2-r1-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/z80tvg2-r1-kicad.zip">
+    KiCad Files - Console</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.36 MB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p> <a href="download/z80tvg/z80tvg-32kb-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kb-r0-bom.html">
+    Interactive Bill of Materials - 32KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 338 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-32kb-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kb-r0-sch.pdf">
+    Schematic - 32KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 127 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-32kb-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kb-r0-gerbers.zip">
+    PCB Gerbers - 32KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 170 KB</i>
+
+<p> <a href="photos/ztg2-15f.jpg"><img SRC="photos/ztg2-15t.jpg" ALT="Z80 TV Game in operation" height=208 width=320 align=RIGHT></a>
+
+    <a href="download/z80tvg/z80tvg-32kb-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kb-r0-kicad.zip">
+    KiCad Files - 32KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 532 KB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p> <a href="download/z80tvg/z80tvg-32kbx16-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kbx16-r0-bom.html">
+    Interactive Bill of Materials - 32KB x 16 Multi-Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 350 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-32kbx16-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kbx16-r0-sch.pdf">
+    Schematic - 32KB x 16 Multi-Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 151 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-32kbx16-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kbx16-r0-gerbers.zip">
+    PCB Gerbers - 32KB x 16 Multi-Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 191 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-32kbx16-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-32kbx16-r0-kicad.zip">
+    KiCad Files - 32KB x 16 Multi-Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 564 KB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p> <a href="download/z80tvg/z80tvg-devcart-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-devcart-r0-bom.html">
+    Interactive Bill of Materials - 32KB Developer's Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 340 KB</i> - This cartridge is designed to accommodate a ZIF socket for easy prototyping. Made for use with 3M 'Textool' sockets <i>(and clones),</i> but it should work with other sockets too.
+
+<p> <a href="download/z80tvg/z80tvg-devcart-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-devcart-r0-sch.pdf">
+    Schematic - 32KB Developer's Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 128 KB</i> - This cartridge is designed to accommodate a ZIF socket for easy prototyping. Made for use with 3M 'Textool' sockets <i>(and clones),</i> but it should work with other sockets too.
+
+<p> <a href="photos/ztvg8_fs.gif"><img SRC="photos/ztvg8_th.gif" ALT="3D render of 32KB cartridge" height=240 width=320 align=RIGHT></a>
+
+    <a href="download/z80tvg/z80tvg-devcart-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-devcart-r0-gerbers.zip">
+    PCB Gerbers - 32KB Developer's Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 198 KB</i> - This cartridge is designed to accommodate a ZIF socket for easy prototyping. Made for use with 3M 'Textool' sockets <i>(and clones),</i> but it should work with other sockets too.
+
+<p> <a href="download/z80tvg/z80tvg-devcart-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-devcart-r0-kicad.zip">
+    KiCad Files - 32KB Developer's Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 543 KB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p> <a href="download/z80tvg/z80tvg-256kb-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-256kb-r0-bom.html">
+    Interactive Bill of Materials - Experimental 256KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 316 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-256kb-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-256kb-r0-sch.pdf">
+    Schematic - Experimental 256KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 221 KB</i>
+
+<p> <a href="download/z80tvg/z80tvg-256kb-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-256kb-r0-gerbers.zip">
+    PCB Gerbers - Experimental 256KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 209 KB</i> - Please note that the 256KB cartridge hasn't yet been tested!
+
+<p> <a href="download/z80tvg/z80tvg-256kb-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-256kb-r0-kicad.zip">
+    KiCad Files - Experimental 256KB ROM Cartridge</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 603 KB</i> - Useful if you want to make modifications to the PCB. Made with KiCad 9.
+
+<p> <a href="download/z80tvg/fonts.zip"><img SRC="icons/zip.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/fonts.zip">
+    Custom Fonts</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 8.90 MB</i> - Custom fonts used for the KiCad files. Only needed if you want to modify these files.
+
+<p> <a href="download/z80tvg/roms.zip"><img SRC="icons/bin.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/roms.zip">
+    Game ROMs</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 1.26 MB</i> - All the games I know to exist for the Z80 TV Game thus far. Includes two combined ROMs for those who would rather have all 31 games <i>(and some example programs I've written)</i> on 2 multi-cartridges. If you know of any games that aren't mentioned on this page <i>(or you've written a new game),</i> please let me know! My email address is on the <a href="index.html">home page.</a>
+
+<p> <a href="download/z80tvg/32kb-dims.pdf"><img SRC="icons/pdf.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/32kb-dims.pdf">
+    32KB Cartridge Dimensions</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; PDF document, 61.3 KB</i> - Useful for designing a 3D printed cartridge enclosure. Note that the standard PCB thickness used by most manufacturers is 1.6mm.
+
+<p> <a href="download/z80tvg/32kbx16-dims.pdf"><img SRC="icons/pdf.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/32kbx16-dims.pdf">
+    32KB x 16 Multi-Cartridge Dimensions</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; PDF document, 67.1 KB</i> - Useful for designing a 3D printed cartridge enclosure. Note that the standard PCB thickness used by most manufacturers is 1.6mm.
+
+<p> <a href="download/z80tvg2/z80tvg2-console-cover-dims.zip"><img SRC="icons/img.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/z80tvg2-console-cover-dims.zip">
+    Console Cover Dimensions</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; ZIP archive, 827 KB</i> - Dimensions for top and bottom covers for the console, to be mounted with M3 screws and standoffs. Many local companies are able to cut out acrylic sheets based on these measurements for a fairly affordable price. Note that on the top cover, there are two extra screwholes in front of the cartridge slot to improve overall stability. The standoffs that go through these holes sit on top of the PCB, instead of aligning with screwholes on the PCB like the other holes. Nylon standoffs must be used in these two holes to prevent damage to the PCB.
+
+<p> <a href="download/z80tvg/z80tvg-cart-3d-model.zip"><img SRC="icons/zip.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg/z80tvg-cart-3d-model.zip">
+    3D Printable Cartridge Shells</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; ZIP archive, 1.94 MB</i> - Enclosures for the console's cartridges in STL format.
+
+<p> <a href="download/z80tvg2/banner1.png"><img SRC="icons/img.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/banner1.png">
+    Z80 TV Game Logo (1920 x 846) (Variant 1)</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; PNG image, 1.21 MB</i> - The logo seen at the top of the page in full resolution.
+
+<p> <a href="download/z80tvg2/banner2.png"><img SRC="icons/img.gif" height=24 width=24></a><b>
+    <a href="download/z80tvg2/banner2.png">
+    Z80 TV Game Logo (1920 x 846) (Variant 2)</a></b>
+    <br><i>&nbsp;&nbsp;&nbsp; PNG image, 1.08 MB</i> - The logo seen at the top of the page in full resolution.
+
+<p>
+
+<hr WIDTH="100%">Thanks to:
+
+    <br>&nbsp;&nbsp;&nbsp; <a href="http://w01.tp1.jp/~a571632211/index.html">Mr. Isizu:</a> The original designer of the <a href="http://w01.tp1.jp/~a571632211/z80tvgame/index.html">Z80 TV Game.</a>
+
+    <p>&nbsp;&nbsp;&nbsp; <a href="https://github.com/inufuto">Inufuto:</a> Developer of <a href="https://github.com/inufuto/Cate">Cate,</a> a multi-platform compiler
+    that can generate software for the Z80 TV Game.
+    <br>&nbsp;&nbsp;&nbsp; <a href="http://inufuto.web.fc2.com/8bit/">All the games he has created with it thus far</a> have Z80 TV Game versions.
+    <br>&nbsp;&nbsp;&nbsp; Inufuto has also designed a <a href="https://github.com/inufuto/Z80TVGA">PCB version of the Z80 TV Game</a> that outputs VGA video via a Raspberry Pi Pico.
+
+    <p>&nbsp;&nbsp;&nbsp; <a href="http://takeda-toshiya.my.coocan.jp/">Takeda Toshiya:</a> Developer of <a href="http://takeda-toshiya.my.coocan.jp/z80tvgame/index.html">eZ80TVGAME,</a> a Z80 TV Game emulator for Windows.
+
+    <p>&nbsp;&nbsp;&nbsp; lsluk: Developer of <a href="http://vdmgr.g2.xrea.com/system_z80tvgame.html">vdmgr,</a> a multi-platform emulator for Windows that supports the Z80 TV Game.
+
+    <p>&nbsp;&nbsp;&nbsp; RobertK: Developer of <a href="https://sourceforge.net/u/robertk-retro/profile/">several games</a> for the Z80 TV Game.
+
+<p>
+
+Last updated on Apr XX, 2026.
+<br>
+This page was first uploaded on Apr XX, 2026.
+<br>
+<script type="text/javascript" src="https://counter.websiteout.com/js/2/0/0/1"></script> visitors since Dec 26, 2025.
+
+</body>
+
+</html>
