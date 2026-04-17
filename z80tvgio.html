@@ -12,18 +12,13 @@
 
 <h2><i><font face="Arial,Helvetica">Z80 TV Game - Assembly Startup Routine</font></i></h2>
 
-This startup routine can be used as a starting point for your Z80 TV Game programs. It does three things:
-<ul>
-<li>
-Disables maskable (/INT) interrupts. This step is not entirely necessary for the system to work, but it may help your software avoid conflicts with future hardware.</li>
-
-<li>
-Clears the system and video RAM to all zeros.</li>
-
-<li>
-Determines whether the system is equipped with an Intel 8255 or Z80PIO I/O controller, and sets the controller's internal registers accordingly.</li>
-</ul>
-You can copy and paste this code into a text editor, or download a more complete set of routines I've written for the Z80 TV Game <a href="download/z80tvg/roms.zip">here.</a>
+    This startup routine can be used as a starting point for your Z80 TV Game programs. It does three things:
+    <ul>
+        <li>Disables maskable (/INT) interrupts. This step is not entirely necessary for the system to work, but it may help your software avoid conflicts with future hardware.</li>
+        <li>Clears the system and video RAM to all zeros.</li>
+        <li>Determines whether the system is equipped with an Intel 8255 or Z80PIO I/O controller, and sets the controller's internal registers accordingly.</li>
+    </ul>
+    You can copy and paste this code into a text editor, or download a more complete set of routines I've written for the Z80 TV Game <a href="download/z80tvg/roms.zip">here.</a>
 
 <p>
 
