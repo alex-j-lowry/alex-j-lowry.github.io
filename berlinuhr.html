@@ -1,14 +1,20 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
+
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
-   <title>Mini Berlin-Uhr - Alex J. Lowry's Electronics Homepage</title>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="GENERATOR" content="Mozilla/4.79 (Macintosh; U; PPC) [Netscape]">
+    <title>Mini Berlin-Uhr - Alex J. Lowry's Electronics Homepage</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body text="#000000" link="#0000FF" vlink="#800080" background="backgnds/sky.gif">
-<a href="index.html"><img SRC="logos/logo1.gif" ALT="Website logo" height=107 width=640></a>
-<hr WIDTH="100%"><img SRC="logos/berlinuhr.jpg" ALT="Mini Berlin-Uhr logo" height=186 width=640>
+
+    <a href="index.html"><img SRC="logos/logo1.gif" ALT="Website logo" height=107 width=640></a>
+
+    <hr WIDTH="100%">
+
+    <img SRC="logos/berlinuhr.jpg" ALT="Mini Berlin-Uhr logo" height=186 width=640>
 
 <h2><i><font face="Arial,Helvetica">Mini Berlin-Uhr</font></i></h2>
 
@@ -28,10 +34,10 @@
 
 <h4><i><font face="Arial,Helvetica">Technical Description</font></i></h4>
 
-    This clock is based on 40xx and 74HCxx CMOS logic ICs. This results in a wide tolerance for the supply voltage; it will run on any DC supply between 3 to 6 volts. The clock can be powered by a DC barrel jack or a USB-B connector.
-    <p>
     <a href="photos/brln5_fs.jpg"><img SRC="photos/brln5_th.jpg" ALT="Seconds on/off jumper and time setting buttons" height=188 width=320 align=RIGHT></a>
 
+    This clock is based on 40xx and 74HCxx CMOS logic ICs. This results in a wide tolerance for the supply voltage; it will run on any DC supply between 3 to 6 volts. The clock can be powered by a DC barrel jack or a USB-B connector.
+    <p>
     The logic and display PCBs connect to each other via a 40-pin header. A pin socket is mounted on the underside of the display, and a pin header (which should be decently tall) is mounted on the top of the logic PCB. A spare display PCB can be used to cover up the back of the logic board.
     <p>
     The PCB layers that make up the clock can be mounted on each other using M3 screws and standoffs.
@@ -43,6 +49,9 @@
     The clock displays 24-hour time. From top to bottom, the light zones are read as follows:
     <ul>
         <li><b>Seconds:</b> Alternates between "off" for even seconds (0, 2, 4...) and "on" for odd seconds (1, 3, 5...). A jumper on the side of the clock allows this light to be disabled if you find the blinking to be distracting.</li>
+
+        <a href="photos/brln6_fs.jpg"><img SRC="photos/brln6_th.jpg" ALT="Power connectors" height=198 width=320 align=RIGHT></a>
+
         <li><b>Hours x5:</b> Each light represents 5 hours.</li>
         <li><b>Hours x1:</b> Each light represents 1 hour. The value of this zone is added to the zone above.</li>
         <li><b>Minutes x5:</b> Each light represents 5 minutes.</li>
@@ -56,42 +65,65 @@
 
 <h4><i><font face="Arial,Helvetica">Downloads</font></i></h4>
 
-<a href="photos/brln6_fs.jpg"><img SRC="photos/brln6_th.jpg" ALT="Power connectors" height=198 width=320 align=RIGHT></a><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html">
-Bill of Materials - Logic (Interactive)</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 373 KB</i> - A list of all the components you'll need to build the logic PCB.
-<p><a href="download/berlnuhr/mini-berlin-uhr-display-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-display-r0-bom.html">
-Bill of Materials - Display (Interactive)</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>HTML document, 302 KB</i> - A list of all the components you'll need to build the display PCB.
-<p><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-sch.pdf">
-Logic Schematic</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 507 KB</i>
-<p><a href="download/berlnuhr/mini-berlin-uhr-display-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-display-r0-sch.pdf">
-Display Schematic</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>PDF document, 173 KB</i>
-<p><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-gerbers.zip">
-Logic PCB Gerbers</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 394 KB</i>
-<p><a href="photos/brln7_fs.jpg"><img SRC="photos/brln7_th.jpg" ALT="Inter-board connector" height=166 width=320 align=RIGHT></a><a href="download/berlnuhr/mini-berlin-uhr-display-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-display-r0-gerbers.zip">
-Display PCB Gerbers</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 175 KB</i>
-<p><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-logic-r0-kicad.zip">
-Logic PCB KiCad Files</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 922 KB</i> - Useful if you want to make modifications to the logic PCB. Made with KiCad 9.
-<p><a href="download/berlnuhr/mini-berlin-uhr-display-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b><a href="download/berlnuhr/mini-berlin-uhr-display-r0-kicad.zip">
-Display PCB KiCad Files</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 575 KB</i> - Useful if you want to make modifications to the display PCB. Made with KiCad 9.
-<p><a href="download/berlnuhr/fonts-uhr.zip"><img SRC="icons/zip.gif" height=24 width=24></a><b><a href="download/berlnuhr/fonts-uhr.zip">
-Custom Fonts</a></b>
-<br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 141 KB</i> - Custom fonts used for the KiCad files. Only needed if you want to modify these files.
-<br>&nbsp;
-<div align=right><a href="photos/brln8_fs.jpg"><img SRC="photos/brln8_th.jpg" ALT="Front and back of both PCBs" height=320 width=297></a></div>
+    <a href="photos/brln7_fs.jpg"><img SRC="photos/brln7_th.jpg" ALT="Inter-board connector" height=166 width=320 align=RIGHT></a>
 
-<hr WIDTH="100%">Thanks to:
+    <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-bom.html">
+    Bill of Materials - Logic (Interactive)</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 373 KB</i> - A list of all the components you'll need to build the logic PCB.
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-display-r0-bom.html"><img SRC="icons/bom.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-display-r0-bom.html">
+    Bill of Materials - Display (Interactive)</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>HTML document, 302 KB</i> - A list of all the components you'll need to build the display PCB.
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-sch.pdf">
+    Logic Schematic</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 507 KB</i>
+
+<p> <a href="photos/brln8_fs.jpg"><img SRC="photos/brln8_th.jpg" ALT="Front and back of both PCBs" height=320 width=297 align=RIGHT></a>
+
+    <a href="download/berlnuhr/mini-berlin-uhr-display-r0-sch.pdf"><img SRC="icons/sch.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-display-r0-sch.pdf">
+    Display Schematic</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>PDF document, 173 KB</i>
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-gerbers.zip">
+    Logic PCB Gerbers</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 394 KB</i>
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-display-r0-gerbers.zip"><img SRC="icons/pcb.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-display-r0-gerbers.zip">
+    Display PCB Gerbers</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 175 KB</i>
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-logic-r0-kicad.zip">
+    Logic PCB KiCad Files</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 922 KB</i> - Useful if you want to make modifications to the logic PCB. Made with KiCad 9.
+
+<p> <a href="download/berlnuhr/mini-berlin-uhr-display-r0-kicad.zip"><img SRC="icons/kicad.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/mini-berlin-uhr-display-r0-kicad.zip">
+    Display PCB KiCad Files</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 575 KB</i> - Useful if you want to make modifications to the display PCB. Made with KiCad 9.
+
+<p> <a href="download/berlnuhr/fonts-uhr.zip"><img SRC="icons/zip.gif" height=24 width=24></a><b>
+    <a href="download/berlnuhr/fonts-uhr.zip">
+    Custom Fonts</a></b>
+    <br>&nbsp;&nbsp;&nbsp; <i>ZIP archive, 141 KB</i> - Custom fonts used for the KiCad files. Only needed if you want to modify these files.
+
+<hr WIDTH="100%">
+
+Thanks to:
 <br>&nbsp;&nbsp;&nbsp; Dieter Binninger for designing the original Berlin-Uhr.
 <br>&nbsp;&nbsp;&nbsp; <a href="http://www.hackersbench.com/index.html">John
 Schuch</a> for designing the <a href="http://www.hackersbench.com/Projects/1Hz/">4060 timebase circuit</a> used in this clock.
 <p>Last updated on Aug 11, 2025.
 <br>This page was first uploaded on Aug 10, 2025.
 <br><script type="text/javascript" src="https://counter.websiteout.com/js/2/0/0/1"></script> visitors since Dec 26, 2025.
+
 </body>
+
 </html>
