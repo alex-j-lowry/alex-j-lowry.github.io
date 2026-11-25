@@ -78,13 +78,13 @@
     Upon startup, the message <i>"SAVIA 84"</i> will be displayed on screen. From here, you can select several operating modes:
     <ul>
         <li><b>Data viewer/editor:</b> First, press <b>AD.</b> Enter a memory address with the <b>0</b>-<b>F</b> keys, then press <b>DA</b> to view the data byte at that location. You can change the data at the current location with the <b>0</b>-<b>F</b> keys, or step back and forth through memory with the <b>S</b> <i>(previous address)</i> and <b>DA</b> <i>(next address)</i> keys. The monitor will warn you if you try to write data to a location outside of RAM by displaying <i>"Er"</i> in the data display.</li>
-        <li><b>CPU register editor:</b> First, press <b>REG.</b> This mode allows you to specify the initial values of the CPU's register pairs before executing a program. You can change the valur of the current register pair with the <b>0</b>-<b>F</b> keys, and cycle through register pairs AF, BC, DE, HL and SP with the <b>DA</b> key.</li>
+        <li><b>CPU register editor:</b> First, press <b>REG.</b> This mode allows you to specify the initial values of the CPU's register pairs before executing a program. You can change the value of the current register pair with the <b>0</b>-<b>F</b> keys, and cycle through register pairs AF, BC, DE, HL and SP with the <b>DA</b> key.</li>
         <li><b>Execute program:</b> First, press <b>EX.</b> Enter an address to start execution at with the <b>0</b>-<b>F</b> keys, then press <b>DA</b> to run your program. When programming, you can put opcode C7 <i>(RST $00)</i> at the end of your program to exit to the monitor.</li>
-        <li><b>Execute program until breakpoint:</b> </li>
+        <li><b>Execute program until breakpoint:</b> (Sorry, I haven't figured out the breakpoints system yet...)</li>
     </ul>
     To exit the data viewer or register editor, you can press one of the function keys (<b>L, BRK, REG, AD, EX</b>) to return to the startup prompt and enter another operating mode.
     <p>
-    Unlike more fully-featured computers, the Savia 84 doesn't clear memory upon reset. This means there's no risk of wiping out your program if you accidentally press the reset key!
+    Unlike more fully-featured computers, the Savia 84 doesn't clear memory upon reset. This means there's no risk of wiping out your program if you accidentally press the reset key.
     <p>
     The monitor was designed with user expansion in mind. During selection of an operating mode, the <b>L</b> and <b>S</b> keys will jump to ROM addresses $0305 and $0285 respectively. By default, these addresses are located in a region of blank space which is intended for the user to add their own loading and saving routine. This could be implemented with a cassette interface connected to the expansion port, or perhaps even an SD card reader.
     <p>
@@ -191,7 +191,7 @@
 
 <p>
 
-Last updated on May 28, 2026.
+Last updated on Nov 25, 2026.
 <br>This page was first uploaded on Nov 30, 2025.
 <br><script type="text/javascript" src="https://counter.websiteout.com/js/2/0/0/1"></script> visitors since Dec 26, 2025.
 
